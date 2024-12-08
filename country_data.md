@@ -1,6 +1,6 @@
 Description of the Country_Data Application
 ================
-As described in the README.md file, this tutorial provides general guidelines and code to perform clustering using Dirichlet Process Mixture (DPM) models on the Country_Data dataset. Specifically, it covers the following:
+As described in the [`README.md`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/README.md) file, this tutorial provides general guidelines and code to perform clustering using Dirichlet Process Mixture (DPM) models on the Country_Data dataset. Specifically, it covers the following:
 
 - How to **sample from a selection of multivariate Dirichlet Process Mixture models with Gaussian kernels**;
 - Methods to **assess the convergence of the MCMC chain**;
@@ -10,14 +10,14 @@ As described in the README.md file, this tutorial provides general guidelines an
 Upload the Country_Data Dataset
 ================
 
-breve descrizione
+First set the working directory where `country-data.csv` is placed. Once this has been done, clean the workspace, and load the data. The dataframe contains socio-economic and health metrics of 167 different nations. The first column lists the names of the different countries. The design matrix including the covariates can be easily obtained by extracting the remaining columns in `country-data.csv`.
 
 ``` r
+rm(list=ls())
 data <- read.csv("country-data.csv")
-str(data)
 
+country <- data[, 1]
 x <- data[, -c(1)]
-cat <- as.factor(data[, 1])
 
 p <- dim(x)[2]
 n <- dim(x)[1]
@@ -27,17 +27,20 @@ n <- dim(x)[1]
 MCMC Sample Generation
 ================
 
-Descrivo cosa faccio
+Load the fundamental library `BNPmix` to implement the algorithm which provides i.i.d. samples from the latent partition posterior. First set the number of iterazions and burn-in of the MCMC chain. Then select the MCMC sampling method to be used, we were interested in the marginal sampler `MAR` by [`Neal 2000`](https://www.jstor.org/stable/1390653). The model is set to be `DLS` for a detailed and useful explanation see the [`BNPmix manual`](https://cran.r-project.org/web/packages/BNPmix). Lastly hyper is equal to FALSE so hyperprior distributions on the base measures's parameter are not added. 
+
+Now set the hyperparameters of the that regulate the prior information. Setting the discount parameter to 0 is crucial, as it leads to a Dirichlet process, which is a specific case of the Pitman-Yor process for which the function `PYdensity()` is designed. The strength parameter is determined by a Gamma(1,1) random variable as suggested in [`Escobar and West 1995`](https://user-web-p-u02.wpi.edu/~balnan/Escobar-West-1995.pdf). The last argument is k0 that is the p-dimensional vector of scale factors defining the normal base measure on the location parameter and it is fixed empirically as a p-vector of 2. Matter of fact there are a lot of other parameters to modify, but we decided to leave the default values.
+
+The last arguments to decide are those for generationg the posterior output. Being interested in the estimated partition put out_type equal to "CLUST".
 
 ``` r
-
 library(BNPmix)
-library(coda)
 
-prior <- list(strenght = rgamma(1,1,1), discount = 0, k0 = rep(2, p))
-output <- list(out_type = 'CLUST', mean_dens = T)
 mcmc <- list(niter = 10000, nburn = 1000, method = "MAR", model = "DLS", 
              hyper = F)
+prior <- list(strenght = rgamma(1,1,1), discount = 0, k0 = rep(2, p))
+output <- list(out_type = 'CLUST', mean_dens = T)
+
 set.seed(123)
 fit <- PYdensity(y = x, mcmc = mcmc, prior = prior,
                  output = output)
@@ -47,9 +50,11 @@ fit <- PYdensity(y = x, mcmc = mcmc, prior = prior,
 MCMC Convergence Assessment
 ================
 
-descrivo 
+descrivo
 
 ``` r
+library(coda)
+
 partitions <- as.matrix(fit$clust)
 num_clusters <- apply(partizioni, 1, function(partizioni) length(unique(partizioni)))
 
