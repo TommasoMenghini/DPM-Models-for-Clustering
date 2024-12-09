@@ -87,7 +87,7 @@ geweke.diag(entropy)
 Salso + VI loss
 ================
 
-As discussed in 
+As discussed in [`simulation.md`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/simulation.md), we compared different algorithms and loss functions to identify the combination that provides the most efficient solution for posterior inference. We found that the combination of the `SALSO` algorithm with the `VI` loss is the best choice for this problem. Therefore, we applied this approach to the real data.
 
 ``` r
 library(salso)
