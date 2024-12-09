@@ -109,27 +109,27 @@ pairs(x, col = labels.salso.VI, pch = 19)
 Graphical Results
 ================
 
-``` r
 
+
+``` r
 library(ggplot2)
 library(rnaturalearthdata)
 library(rnaturalearth)
+library(tidyverse)
 
-labels.clust = as.numeric(summ.VI$estimate)
-clust = cbind(cat, as.numeric(labels.clust))
-colnames(clust) = c('country','cluster')
-cluster = as.numeric(clust[,2])
-clust = clust[,-2]
-clust = as.data.frame(cbind(clust, cluster))
-clust = clust[,c(1,2)]
-clust[,2] = as.numeric(clust[,2])
-colnames(clust) = c('country','cluster')
+cat <- data[, 1]
+labels.clust <- summ.VI$estimate
 
-world = ne_countries(scale = "medium", returnclass = "sf")
+clust <- as.data.frame(cbind(cat, labels.clust))
+clust[,2] <- as.numeric(clust[,2])
+colnames(clust) <- c('country','cluster')
+str(clust)
+
+world <- ne_countries(scale = "medium", returnclass = "sf")
 unique(world$name)
 unique(clust$country)
 
-country_corrections = c(
+country_corrections <- c(
   "Congo, Dem. Rep." = "Dem. Rep. Congo",
   "Congo, Rep." = "Congo",
   "Central African Republic" = "Central African Rep.",
@@ -146,10 +146,10 @@ country_corrections = c(
   "Cote d'Ivoire" = "CÃ´te d'Ivoire"
 )
 
-clust = clust %>%
+clust <- clust %>%
   mutate(country = recode(country, !!!country_corrections))
 
-world = left_join(world, clust, by = c("name" = "country"))
+world <- left_join(world, clust, by = c("name" = "country"))
 
 ggplot(data = world) +
   geom_sf(aes(fill = factor(cluster))) +  
@@ -160,11 +160,9 @@ ggplot(data = world) +
   ) + 
   theme_minimal() +
   theme(legend.position = "bottom")
-
-
 ```
 
-immagine grafico sopra
+![](https://raw.githubusercontent.com/TommasoMenghini/DPM-Models-for-Clustering/main/img/.png)
 
 
 ``` r
