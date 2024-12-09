@@ -164,7 +164,6 @@ ggplot(data = world) +
 
 ![](https://raw.githubusercontent.com/TommasoMenghini/DPM-Models-for-Clustering/main/img/2010World.pdf)
 
-
 ``` r
 
 data.new <- as.data.frame(cbind(data, as.factor(clust$cluster)))
