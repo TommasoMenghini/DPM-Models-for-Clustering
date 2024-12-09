@@ -162,7 +162,7 @@ ggplot(data = world) +
   theme(legend.position = "bottom")
 ```
 
-![](https://raw.githubusercontent.com/TommasoMenghini/DPM-Models-for-Clustering/main/img/2010World.pdf)
+![](https://raw.githubusercontent.com/TommasoMenghini/DPM-Models-for-Clustering/main/img/2010World.png)
 
 ``` r
 
