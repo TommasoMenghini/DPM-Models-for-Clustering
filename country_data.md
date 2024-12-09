@@ -50,7 +50,9 @@ fit <- PYdensity(y = x, mcmc = mcmc, prior = prior,
 MCMC Convergence Assessment
 ================
 
-descrivo
+To assess convergence in our MCMC chain, we opted for a graphical approach, plotting two functionals of the chain: the number of clusters and the entropy of every visited partition. The resulting plots suggest convergence.
+
+Another approach could involve applying diagnostics to these quantities. For instance, the R library `coda` offers a range of useful functions, such as `geweke.diag()`, which provides a convergence diagnostic based on a test for the equality of the means of the first and last parts of a Markov chain. If the test statistic is not significant, it is a positive indication of convergence.
 
 ``` r
 library(coda)
@@ -82,15 +84,12 @@ geweke.diag(entropy)
 
 ```
 
-cosa mi risulta
-
 Salso + VI loss
 ================
 
-Descrivo cosa andrò a fare
+As discussed in 
 
 ``` r
-
 library(salso)
 
 start_time <- Sys.time()
