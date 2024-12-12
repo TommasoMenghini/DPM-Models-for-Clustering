@@ -29,9 +29,9 @@ MCMC Sample Generation
 
 Load the fundamental library `BNPmix` to implement the algorithm which provides i.i.d. samples from the latent partition posterior. First set the number of iterazions and burn-in of the MCMC chain. Then select the MCMC sampling method to be used, we were interested in the marginal sampler `MAR` by [`Neal 2000`](https://www.jstor.org/stable/1390653). The model is set to be `DLS` for a detailed and useful explanation see the [`BNPmix manual`](https://cran.r-project.org/web/packages/BNPmix). Lastly hyper is equal to FALSE so hyperprior distributions on the base measures's parameter are not added. 
 
-Now set the hyperparameters of the that regulate the prior information. Setting the discount parameter to 0 is crucial, as it leads to a Dirichlet process, which is a specific case of the Pitman-Yor process for which the function `PYdensity()` is designed. The strength parameter is determined by a Gamma(1,1) random variable as suggested in [`Escobar and West 1995`](https://user-web-p-u02.wpi.edu/~balnan/Escobar-West-1995.pdf). The last argument is k0 that is the p-dimensional vector of scale factors defining the normal base measure on the location parameter and it is fixed empirically as a p-vector of 2. Matter of fact there are a lot of other parameters to modify, but we decided to leave the default values.
+Now set the hyperparameters that regulate the prior information. Setting the discount parameter to 0 is crucial, as it leads to a Dirichlet process, which is a specific case of the Pitman-Yor processes for which the function `PYdensity()` is designed. The strength parameter is determined by a Gamma(1,1) random variable as suggested in [`Escobar and West 1995`](https://user-web-p-u02.wpi.edu/~balnan/Escobar-West-1995.pdf). The last argument is k0 that is the p-dimensional vector of scale factors defining the normal base measure on the location parameter and it is fixed empirically as a p-vector of 2. Actually there are a lot of other parameters to modify, but we decided to leave the default values.
 
-The last arguments to decide are those for generationg the posterior output. Being interested in the estimated partition put out_type equal to "CLUST".
+The last arguments to decide are those for generating the posterior output. Being interested in the estimated partition put out_type equal to "CLUST".
 
 ``` r
 library(BNPmix)
@@ -50,7 +50,7 @@ fit <- PYdensity(y = x, mcmc = mcmc, prior = prior,
 MCMC Convergence Assessment
 ================
 
-To assess convergence in our MCMC chain, we opted for a graphical approach, plotting two functionals of the chain: the number of clusters and the entropy of every visited partition. The resulting plots suggest convergence.
+To assess convergence in our MCMC chain you can opt for a graphical approach, plotting two functionals of the chain: the number of clusters and the entropy of every visited partition. The resulting plots suggest convergence.
 
 Another approach could involve applying diagnostics to these quantities. For instance, the R library `coda` offers a range of useful functions, such as `geweke.diag()`, which provides a convergence diagnostic based on a test for the equality of the means of the first and last parts of a Markov chain. If the test statistic is not significant, it is a positive indication of convergence.
 
@@ -87,7 +87,7 @@ geweke.diag(entropy)
 Salso + VI loss
 ================
 
-As discussed in [`simulation.md`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/simulation.md), we compared different algorithms and loss functions to identify the combination that provides the most efficient solution for posterior inference. We found that the combination of the `SALSO` algorithm with the `VI` loss is the best choice for this problem. Therefore, we applied this approach to the real data.
+As discussed in [`simulation.md`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/simulation.md), we compared different algorithms and loss functions to identify the combination that provides the most efficient solution for posterior inference. We found out that the combination of the `SALSO` algorithm with the `VI` loss is the best choice for this problem. Therefore, we applied this approach to the real data obtaining the partition that minimizes the posterior expexted loss.
 
 ``` r
 library(salso)
@@ -106,10 +106,11 @@ pairs(x, col = labels.salso.VI, pch = 19)
 
 ```
 
+
 Graphical Results
 ================
 
-
+Obtained the partition that minimizes the posterior expected loss, load some useful `R` packages in order to build the world map. First, the names of certain countries need to be arranged    
 
 ``` r
 library(ggplot2)
@@ -156,7 +157,7 @@ ggplot(data = world) +
   scale_fill_manual(values = c("1" = 'yellow', "2" = 'red', "3" = 'green',
                                "4" = 'orange', "5" = 'purple', "6" = 'blue', na.value = 'grey'),
                     name = 'Cluster VI salso',
-                    labels = c('1', '2', '3', '4', '5', '6', 'Valori non registrati')
+                    labels = c('1', '2', '3', '4', '5', '6', 'No data available')
   ) + 
   theme_minimal() +
   theme(legend.position = "bottom")
@@ -201,7 +202,6 @@ ggplot(df, aes(x = as.numeric(scaled.gdpp))) +
   labs(x = "GDP pro capite scalato", y = "") +
   theme_minimal() +
   theme(legend.position = "none")  +
-  # Aggiungi l'annotazione per la Cina
   annotate("text", x = 1+0.04, 
            y = densities[35] + 0.04, 
            label = "China", color = "black", size = 3, hjust = 0, fontface = "bold") +
