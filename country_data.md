@@ -164,6 +164,7 @@ ggplot(data = world) +
   theme_minimal() +
   theme(legend.position = "bottom")
 ```
+Let's make some considerations about the graph below. The Dirichlet process mixture model identifies 6 different clusters; it's quite immediate to recognize some patterns in the partition. Notice the `Green` cluster, which includes nations belonging to the West—not in a geographical sense, but rather in a political and economic context. The `Red` cluster contains countries that, at least in 2010, could be considered part of the Second World—nations with varying levels of economic development, often with strong industrialization, but with shortages in consumer goods and living standards that are not always high. Focusing on the `Yellow` cluster, notice that it is spread across the Sub-Saharan region and the Indian subcontinent. Therefore, these states can be labeled as Third World countries—less developed economically, politically, and socially.
 
 ![](https://raw.githubusercontent.com/TommasoMenghini/DPM-Models-for-Clustering/main/img/World2010.png)
 
