@@ -110,6 +110,11 @@ pairs(x, col = labels.salso.VI, pch = 19)
 Graphical Results
 ================
 
+This section contains codes to build some graphs to discuss our results.
+
+World Map
+------------------
+
 Obtained the partition that minimizes the posterior expected loss, load some useful `R` packages in order to build the world map. Of course the names of certain countries need to be arranged. Consider the code below to obtain the world map.   
 
 ``` r
@@ -164,9 +169,46 @@ ggplot(data = world) +
 ```
 Let's make some considerations about the graph below. The Dirichlet process mixture model identifies 6 different clusters; it's quite immediate to recognize some patterns in the partition. Notice the `Green` cluster, which includes nations belonging to the West—not in a geographical sense, but rather in a political and economic context. The `Red` cluster contains countries that, at least in 2010, could be considered part of the Second World—nations with varying levels of economic development, often with strong industrialization, but with shortages in consumer goods and living standards that are not always high. Focusing on the `Yellow` cluster, notice that it is spread across the Sub-Saharan region and the Indian subcontinent. Therefore, these states can be labeled as Third World countries—less developed economically, politically, and socially.
 
-Let's talk about the `Orange` cluster: it contains only seven states—Bahrain, Brunei, Kuwait, Oman, Qatar, Saudi Arabia, and the United Arab Emirates. All these countries belong to the Arabian Peninsula, and they lead the global export of oil. That's why they are extremely wealthy nations. This wealth, however, is distributed in a highly unequal way: very few people, mainly the political and social elite, possess it. This is the most convincing argument that distinguishes these states from the `Green` ones. 
+Let's talk about the `Orange` cluster: it contains only seven states—Bahrain, Brunei, Kuwait, Oman, Qatar, Saudi Arabia, and the United Arab Emirates. All these countries belong to the Arabian Peninsula, and they lead the global export of oil. That's why they are extremely wealthy nations. This wealth, however, is distributed in a highly unequal way: very few people, mainly the political and social elite, possess it. This is the most convincing argument that distinguishes these states from the `Green` ones. Furthermore, note that the only country in the Arabian Peninsula that does not belong to the `Orange` cluster is Yemen. Although Yemen possesses significant oil reserves, in 2010 it was not (and still is not) a major exporter of petroleum. The causes can be traced to internal difficulties such as civil war, corruption, and lacking infrastructure.
+
+The `Purple` cluster contains four countries: Equatorial Guinea, Mongolia, Nigeria, and Venezuela. This time, there is no recognizable pattern.
+The last cluster is the `Blue` one, which is not visible on the world map and contains three states: Luxembourg, Malta, and Singapore. In this case, it is fairly simple to understand what these nations have in common: they are geographically very small and can be (and still are) labeled as tax havens.
+
 
 ![](https://raw.githubusercontent.com/TommasoMenghini/DPM-Models-for-Clustering/main/img/World2010.png)
+
+Consider the code below to build the frequency table of the clusters.
+
+``` r
+library(knitr)
+
+table(clust$cluster)[1]
+
+tab <- c(table(clust$cluster)[1], table(clust$cluster)[2],
+         table(clust$cluster)[3], table(clust$cluster)[4],
+         table(clust$cluster)[5], table(clust$cluster)[6])
+
+table <- data.frame(
+  Yellow = tab[1],
+  Red = tab[2],
+  Green = tab[3],
+  Orange = tab[4],
+  Purple = tab[5],
+  Blue = tab[6]
+)
+
+kable(table, format = "markdown")
+```
+
+| Yellow| Red| Green| Orange| Purple| Blue|
+|------:|---:|-----:|------:|------:|----:|
+|     58|  66|    29|      7|      4|    3|
+
+
+The resulting table shows the frequency of each cluster, note that the largest clusters are the `Yellow` and `Red` ones.
+
+Scaled Pro Capite GDP density plot
+------------------
 
 
 
