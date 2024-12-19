@@ -214,12 +214,9 @@ Scaled Pro Capite GDP density plot
 
 ``` r
 
-data.new <- as.data.frame(cbind(data, as.factor(clust$cluster)))
-colnames(data.new)[colnames(data.new) == "as.factor(clust$cluster)"] <- "cluster"
-
 scaled.gdp <- scale(data.new$gdpp)
-df <- as.data.frame(cbind(as.numeric(scaled.gdp), as.factor(cluster), data$country))
-colnames(df) = c('scaled.gdpp','cluster', "Country")
+df <- as.data.frame(cbind(scaled.gdp, clust$cluster, data$country))
+colnames(df) <- c('scaled.gdpp','cluster', "Country")
 
 str(df)
 
@@ -232,21 +229,21 @@ which(data$country == "Saudi Arabia")
 
       
 density_estimate <- density(scaled.gdp)
-# Interpola i valori di densità per il tuo vettore x
+
 densities <- approx(density_estimate$x, density_estimate$y, xout = scaled.gdp)$y
 length(densities)
 length(data$country)
 
 ggplot(df, aes(x = as.numeric(scaled.gdpp))) +
-  geom_density() +  # Stima della densità
-  geom_point(aes(y = densities , color = as.factor(cluster)),  # Punti colorati per cluster
+  geom_density() +  
+  geom_point(aes(y = densities , color = as.factor(cluster)),  
              position = position_jitter(height = 0.01), size = 2) +
   scale_color_manual(values = c("1" = 'yellow', "2" = 'red', "3" = 'green',
                                 "4" = 'orange', "5" = 'purple', "6" = 'blue', na.value = 'grey'),
                      name = 'Cluster VI salso',
-                     labels = c('1', '2', '3', '4', '5', '6', 'Valori non registrati')
-  ) +  # Usa il vettore di colori
-  labs(x = "GDP pro capite scalato", y = "") +
+                     labels = c('1', '2', '3', '4', '5', '6', 'No data available')
+  ) +  
+  labs(x = "Scaled GDP per capita", y = "") +
   theme_minimal() +
   theme(legend.position = "none")  +
   annotate("text", x = 1+0.04, 
