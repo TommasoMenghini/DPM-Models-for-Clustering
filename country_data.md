@@ -214,7 +214,7 @@ Scaled Pro Capite GDP density plot
 
 ``` r
 
-scaled.gdp <- scale(data.new$gdpp)
+scaled.gdp <- scale(data$gdpp)
 df <- as.data.frame(cbind(scaled.gdp, clust$cluster, data$country))
 colnames(df) <- c('scaled.gdpp','cluster', "Country")
 
@@ -271,11 +271,11 @@ ggplot(df, aes(x = as.numeric(scaled.gdpp))) +
            yend = 0.3, 
            arrow = arrow(length = unit(0.2, "cm")), color = "black") 
 
-
+scaled_gdp.2010 <- scaled.gdp
 labels.2010 <- clust$cluster
 country2010 <- clust$country 
 
-save(labels.2010, country2010, file = "2010data")
+save(scaled_gdp.2010, labels.2010, country2010, file = "2010data")
 
 ```
 immagine grafico 
