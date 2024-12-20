@@ -274,6 +274,14 @@ ggplot(df, aes(x = as.numeric(scaled.gdpp))) +
            yend = 0.3, 
            arrow = arrow(length = unit(0.2, "cm")), color = "black") 
 
+```
+
+
+
+
+
+``` r
+
 scaled_gdp.2010 <- scaled.gdp
 labels.2010 <- clust$cluster
 country2010 <- clust$country 
@@ -281,9 +289,3 @@ country2010 <- clust$country
 save(scaled_gdp.2010, labels.2010, country2010, file = "2010data")
 
 ```
-immagine grafico 
-
-
-
-
-
