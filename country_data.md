@@ -110,12 +110,14 @@ pairs(x, col = labels.salso.VI, pch = 19)
 Graphical Results
 ================
 
-This section contains codes to build some graphs to discuss our results.
+This section contains codes to build two plots: 
+- the **World Map**, that clearly shows the partition of countries that we obtained minimizing the posterior expected loss;
+- the **Scaled GDP per Capita Density Plot**, which shows the estimated density of a scaled variable from the dataset. The plot highlights the optimal clustering estimate, with colors representing cluster membership.
 
 World Map
 ------------------
 
-Obtained the partition that minimizes the posterior expected loss, load some useful `R` packages in order to build the world map. Of course the names of certain countries need to be arranged. Consider the code below to obtain the world map.   
+Obtained the partition that minimizes the posterior expected loss, load some useful `R` packages in order to build the **World map**. Of course the names of certain countries need to be arranged. The following code generates the plot shown below.   
 
 ``` r
 library(ggplot2)
@@ -177,7 +179,7 @@ The last cluster is the `Blue` one, which is not visible on the world map and co
 
 ![](https://raw.githubusercontent.com/TommasoMenghini/DPM-Models-for-Clustering/main/img/World2010.png)
 
-Consider the code below to build the frequency table of the clusters.
+Run the following code to build the frequency table of the clusters.
 
 ``` r
 library(knitr)
@@ -207,7 +209,7 @@ kable(table, format = "markdown")
 
 The resulting table shows the frequency of each cluster, note that the largest clusters are the `Yellow` and `Red` ones.
 
-Scaled Pro Capite GDP density plot
+Scaled GDP per capita density plot
 ------------------
 
 
