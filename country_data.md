@@ -212,7 +212,11 @@ The resulting table shows the frequency of each cluster, note that the largest c
 Scaled GDP per capita density plot
 ------------------
 
+In the [`world_bank.md`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/world_bank.md) file, another World Map is created using data from 2022 instead of 2010, as shown in this example. Naturally, a different optimal partition that minimizes the posterior expected loss will be obtained. However, while it is not something to take for granted and caution is advised, it is reasonable to compare clusters from different optimal partitions—the 2010 and the 2022 partitions.
 
+To pursue this objective, the plot below was created. It depicts the density of the scaled GDP per capita, where each point represents a specific country and is colored according to cluster membership. The density of this feature was estimated using the R function `density()`, which computes kernel density estimates. Although alternative methods to estimate density might be more elegant, we opted for this approach due to time constraints.
+
+Convinced by these arguments, we will study the cases of China, Saudi Arabia, and Ireland.
 
 ``` r
 
@@ -222,11 +226,8 @@ colnames(df) <- c('scaled.gdpp','cluster', "Country")
 
 str(df)
 
-
 which(data$country == "China")
-which(data$country == "Chile")
 which(data$country == "Ireland")
-which(data$country == "Italy")
 which(data$country == "Saudi Arabia")
 
       
