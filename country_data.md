@@ -50,9 +50,9 @@ fit <- PYdensity(y = x, mcmc = mcmc, prior = prior,
 MCMC Convergence Assessment
 ================
 
-To **assess convergence** in our MCMC chain you can opt for a graphical approach, plotting two functionals of the chain: the **number of clusters** and the **entropy** of every visited partition. The resulting plots suggest convergence.
+To **assess convergence** in our MCMC chain you can opt for a graphical approach, plotting two functionals of the chain: the **number of clusters** and the **entropy** of every visited partition. 
 
-Another approach could involve applying diagnostics to these quantities. For instance, the R library `coda` offers a range of useful functions, such as `geweke.diag()`, which provides a convergence diagnostic based on a test for the equality of the means of the first and last parts of a Markov chain. If the test statistic is not significant, it is a positive indication of convergence.
+Another approach could involve applying **diagnostics** to these quantities. For instance, the R library `coda` offers a range of useful functions, such as `geweke.diag()`, which provides a **convergence diagnostic based on a test** for the equality of the means of the first and last parts of a Markov chain. If the test statistic is not significant, it is a positive indication of convergence.
 
 ``` r
 library(coda)
@@ -83,11 +83,13 @@ plot(entropy)
 geweke.diag(entropy)
 
 ```
+The trace plots and the tests suggest convergence.
+
 
 Salso + VI loss
 ================
 
-As discussed in [`simulation.md`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/simulation.md), we compared different algorithms and loss functions to identify the combination that provides the most efficient solution for posterior inference. We found out that the combination of the `SALSO` algorithm with the `VI` loss is the best choice for this problem. Therefore, we applied this approach to the real data obtaining the partition that minimizes the posterior expexted loss.
+As discussed in [`simulation.md`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/simulation.md), we compared **different algorithms** and **loss functions** to identify the combination that provides the **most efficient solution for posterior inference**. We found out that the combination of the `SALSO` algorithm with the `VI` loss is the best choice for this problem. Therefore, we applied this approach to the real data obtaining the partition that minimizes the posterior expexted loss.
 
 ``` r
 library(salso)
@@ -112,8 +114,8 @@ Graphical Results
 
 This section contains codes to build two plots: 
 - the **World Map**, that clearly shows the partition of countries that we obtained minimizing the posterior expected loss;
-- the **Scaled GDP per Capita Density Plot**, which shows the estimated density of a scaled variable from the dataset. The plot highlights the optimal clustering estimate, with colors representing cluster membership.
-
+- the **Scaled GDP per Capita Density Plot**, which shows the estimated density of a scaled variable from the dataset. The optimal clustering estimate is also highlighted, with colours representing cluster membership.
+  
 World Map
 ------------------
 
@@ -169,17 +171,21 @@ ggplot(data = world) +
   theme_minimal() +
   theme(legend.position = "bottom")
 ```
-Let's make some considerations about the graph below. The Dirichlet process mixture model identifies 6 different clusters; it's quite immediate to recognize some patterns in the partition. Notice the `Green` cluster, which includes nations belonging to the West—not in a geographical sense, but rather in a political and economic context. The `Red` cluster contains countries that, at least in 2010, could be considered part of the Second World—nations with varying levels of economic development, often with strong industrialization, but with shortages in consumer goods and living standards that are not always high. Focusing on the `Yellow` cluster, notice that it is spread across the Sub-Saharan region and the Indian subcontinent. Therefore, these states can be labeled as Third World countries—less developed economically, politically, and socially.
+Let's consider the graph below. The Dirichlet process mixture model identifies **6 different clusters** and it's quite easy to recognize some patterns in the partition. Focus on the `Green` cluster, which includes nations that belong to the **West**, not in a geographical sense, but rather in a political and economic context. For example **Japan, South Corea and Australia** are part of this cluster but they are not located in Europe or North America, therefore we can say that these `Green` countries are those that are more developed in socio-economic and health terms.
 
-Let's talk about the `Orange` cluster: it contains only seven states—Bahrain, Brunei, Kuwait, Oman, Qatar, Saudi Arabia, and the United Arab Emirates. All these countries belong to the Arabian Peninsula, and they lead the global export of oil. That's why they are extremely wealthy nations. This wealth, however, is distributed in a highly unequal way: very few people, mainly the political and social elite, possess it. This is the most convincing argument that distinguishes these states from the `Green` ones. Furthermore, note that the only country in the Arabian Peninsula that does not belong to the `Orange` cluster is Yemen. Although Yemen possesses significant oil reserves, in 2010 it was not (and still is not) a major exporter of petroleum. The causes can be traced to internal difficulties such as civil war, corruption, and lacking infrastructure.
+The `Red` cluster contains countries that, at least in 2010, could be considered part of the **Second World** . These nations exhibit **varying levels of economic development**, often characterized by **strong industrialization** but also by **shortages in consumer goods** and living standards that are not consistently high. For example, the **Russian Federation** and **Brazil** are part of this cluster, which is convincing because these nations are known for economies heavily reliant on exporting raw materials such as natural gas and wood.
+
+Focusing on the `Yellow` cluster, notice that it is spread across the Sub-Saharan region and the Indian subcontinent. Therefore, these states can be labeled as **Third World countries** —less developed economically, politically, and socially.
+
+Let's talk about the `Orange` cluster: it contains only seven states — **Bahrain, Brunei, Kuwait, Oman, Qatar, Saudi Arabia, and the United Arab Emirates**. All these countries belong to the **Arabian Peninsula**, and they lead the global export of **oil**. That's why they are extremely wealthy nations. This wealth, however, is distributed in a highly unequal way: very few people, mainly the political and social elite, possess it. This is the most convincing argument that distinguishes these states from the `Green` ones. Furthermore, note that the only country in the Arabian Peninsula that does not belong to the `Orange` cluster is Yemen. Although **Yemen** possesses significant oil reserves, in 2010 it was not (and still is not) a major exporter of petroleum. The causes can be traced to internal difficulties such as civil war, corruption, and lacking infrastructure.
 
 The `Purple` cluster contains four countries: Equatorial Guinea, Mongolia, Nigeria, and Venezuela. This time, there is no recognizable pattern.
-The last cluster is the `Blue` one, which is not visible on the world map and contains three states: Luxembourg, Malta, and Singapore. In this case, it is fairly simple to understand what these nations have in common: they are geographically very small and can be (and still are) labeled as tax havens.
+The last cluster is the `Blue` one, which is not visible on the world map and contains three states: **Luxembourg, Malta, and Singapore**. In this case, it is fairly simple to understand what these nations have in common: they are geographically **very small** and can be (and still are) labeled as **tax havens**.
 
 
 ![](https://raw.githubusercontent.com/TommasoMenghini/DPM-Models-for-Clustering/main/img/World2010.png)
 
-Run the following code to build the frequency table of the clusters.
+Run the following code to build a frequency table of the clusters.
 
 ``` r
 library(knitr)
@@ -212,11 +218,11 @@ The resulting table shows the frequency of each cluster, note that the largest c
 Scaled GDP per capita density plot
 ------------------
 
-In the [`world_bank.md`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/world_bank.md) file, another World Map is created using data from 2022 instead of 2010, as shown in this example. Naturally, a different optimal partition that minimizes the posterior expected loss will be obtained. However, while it is not something to take for granted and caution is advised, it is reasonable to compare clusters from different optimal partitions—the 2010 and the 2022 partitions.
+In the [`worldbank_data.md`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/worldbakn_data.md) file, another World Map is created using data from 2022 instead of 2010, as shown in this example. Naturally, a different optimal partition that minimizes the posterior expected loss will be obtained. However, while it is not something to take for granted and caution is advised, **it is reasonable to compare clusters from different optimal partitions—the 2010 and the 2022 partitions**.
 
-To pursue this objective, the plot below was created. It depicts the density of the scaled GDP per capita, where each point represents a specific country and is colored according to cluster membership. The density of this feature was estimated using the R function `density()`, which computes kernel density estimates. Although alternative methods to estimate density might be more elegant, we opted for this approach due to time constraints.
+To pursue this objective, the plot below was created. It depicts the **density of the scaled GDP per capita**, where each point represents a specific country and is colored according to cluster membership. The density of this feature was estimated using the R function `density()`, which computes kernel density estimates. Although alternative density estimation methods might be more elegant, we opted for this approach due to time constraints.
 
-Convinced by these arguments, we will study the cases of China, Saudi Arabia, and Ireland.
+Convinced by these arguments, we will study the cases of **China, Saudi Arabia, and Ireland**.
 
 ``` r
 
@@ -276,7 +282,7 @@ ggplot(df, aes(x = as.numeric(scaled.gdpp))) +
 
 ```
 
-What can be inferred from this plot will be discussed in the [`world_bank.md`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/world_bank.md). However, the main idea is to observe the presence (or absence) of a shift to the right tail of the distribution for a certain country, which could indicate its socio-economic development.
+The inferences drawn from this plot will be discussed in the [`worldbank_data.md`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/worldbank_data.md) file. However, the main idea is to **observe the presence (or absence) of a shift to the right tail** of the distribution for a certain country, which could indicate its socio-economic development.
 
 
 ![](https://raw.githubusercontent.com/TommasoMenghini/DPM-Models-for-Clustering/main/img/GDPP_2010.png)
