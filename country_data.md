@@ -1,6 +1,6 @@
 Description of the Country_Data Application
 ================
-As described in the [`README.md`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/README.md) file, this tutorial provides general guidelines and code to perform clustering using Dirichlet Process Mixture (DPM) models on the Country_Data dataset. Specifically, it covers the following:
+As described in the [`README.md`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/README.md) file, this tutorial provides general guidelines and code to perform clustering using **Dirichlet Process Mixture (DPM) models** on the Country_Data dataset. Specifically, it covers the following:
 
 - How to **sample from a selection of multivariate Dirichlet Process Mixture models with Gaussian kernels**;
 - Methods to **assess the convergence of the MCMC chain**;
@@ -10,7 +10,7 @@ As described in the [`README.md`](https://github.com/TommasoMenghini/DPM-Models-
 Upload the Country_Data Dataset
 ================
 
-First set the working directory where `country-data.csv` is placed. Once this has been done, clean the workspace, and load the data. The dataframe contains socio-economic and health metrics of 167 different nations. The first column lists the names of the different countries. The design matrix including the covariates can be easily obtained by extracting the remaining columns in `country-data.csv`.
+First set the working directory where `country-data.csv` is placed. Once this has been done, clean the workspace, and load the data. The dataframe contains **socio-economic and health metrics** of 167 different nations. The first column lists the names of the different countries. The design matrix including the covariates can be easily obtained by extracting the remaining columns in `country-data.csv`.
 
 ``` r
 rm(list=ls())
@@ -27,11 +27,11 @@ n <- dim(x)[1]
 MCMC Sample Generation
 ================
 
-Load the fundamental library `BNPmix` to implement the algorithm which provides i.i.d. samples from the latent partition posterior. First set the number of iterazions and burn-in of the MCMC chain. Then select the MCMC sampling method to be used, we were interested in the marginal sampler `MAR` by [`Neal 2000`](https://www.jstor.org/stable/1390653). The model is set to be `DLS` for a detailed and useful explanation see the [`BNPmix manual`](https://cran.r-project.org/web/packages/BNPmix). Lastly hyper is equal to FALSE so hyperprior distributions on the base measures's parameter are not added. 
+Load the fundamental library `BNPmix` to implement the algorithm which provides **i.i.d. samples** from the latent partition posterior. First set the number of iterations and burn-in of the MCMC chain. Then select the MCMC sampling method to be used, we were interested in the **marginal sampler** `MAR` by [`Neal 2000`](https://www.jstor.org/stable/1390653). The model is set to be `DLS` for a detailed and useful explanation see the [`BNPmix manual`](https://cran.r-project.org/web/packages/BNPmix). Lastly hyper is equal to `FALSE` so hyperprior distributions on the base measures's parameter are not added. 
 
-Now set the hyperparameters that regulate the prior information. Setting the discount parameter to 0 is crucial, as it leads to a Dirichlet process, which is a specific case of the Pitman-Yor processes for which the function `PYdensity()` is designed. The strength parameter is determined by a Gamma(1,1) random variable as suggested in [`Escobar and West 1995`](https://user-web-p-u02.wpi.edu/~balnan/Escobar-West-1995.pdf). The last argument is k0 that is the p-dimensional vector of scale factors defining the normal base measure on the location parameter and it is fixed empirically as a p-vector of 2. Actually there are a lot of other parameters to modify, but we decided to leave the default values.
+Now set the **hyperparameters** that regulate the prior information. Setting the **discount parameter** to 0 is crucial, as it leads to a Dirichlet process, which is a specific case of the Pitman-Yor processes for which the function `PYdensity()` is designed. The **strength parameter** is determined by a Gamma(1,1) random variable as suggested in [`Escobar and West 1995`](https://user-web-p-u02.wpi.edu/~balnan/Escobar-West-1995.pdf). The last argument is k0 that is the p-dimensional vector of **scale factors** defining the **normal base measure** on the **location parameter** and it is fixed empirically as a **p-vector of 2**. Actually there are a lot of other parameters to modify, but we decided to leave the default values.
 
-The last arguments to decide are those for generating the posterior output. Being interested in the estimated partition put out_type equal to "CLUST".
+The last arguments to decide are those for generating the posterior output. Being **interested in the estimated partition** put out_type equal to "CLUST".
 
 ``` r
 library(BNPmix)
@@ -50,7 +50,7 @@ fit <- PYdensity(y = x, mcmc = mcmc, prior = prior,
 MCMC Convergence Assessment
 ================
 
-To assess convergence in our MCMC chain you can opt for a graphical approach, plotting two functionals of the chain: the number of clusters and the entropy of every visited partition. The resulting plots suggest convergence.
+To **assess convergence** in our MCMC chain you can opt for a graphical approach, plotting two functionals of the chain: the **number of clusters** and the **entropy** of every visited partition. The resulting plots suggest convergence.
 
 Another approach could involve applying diagnostics to these quantities. For instance, the R library `coda` offers a range of useful functions, such as `geweke.diag()`, which provides a convergence diagnostic based on a test for the equality of the means of the first and last parts of a Markov chain. If the test statistic is not significant, it is a positive indication of convergence.
 
@@ -276,17 +276,18 @@ ggplot(df, aes(x = as.numeric(scaled.gdpp))) +
 
 ```
 
+What can be inferred from this plot will be discussed in the [`world_bank.md`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/world_bank.md). However, the main idea is to observe the presence (or absence) of a shift to the right tail of the distribution for a certain country, which could indicate its socio-economic development.
+
+
 ![](https://raw.githubusercontent.com/TommasoMenghini/DPM-Models-for-Clustering/main/img/GDPP_2010.png)
 
 
-
+Finally, **save the relevant quantities in the file** `2010.RData`. 
 
 ``` r
-
 scaled_gdp.2010 <- scaled.gdp
 labels.2010 <- clust$cluster
 country2010 <- clust$country 
 
-save(scaled_gdp.2010, labels.2010, country2010, file = "2010data")
-
+save(scaled_gdp.2010, labels.2010, country2010, file = "2010data.RData")
 ```
