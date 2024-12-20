@@ -276,6 +276,7 @@ ggplot(df, aes(x = as.numeric(scaled.gdpp))) +
 
 ```
 
+![](https://raw.githubusercontent.com/TommasoMenghini/DPM-Models-for-Clustering/main/img/GDPP_2010.png)
 
 
 
