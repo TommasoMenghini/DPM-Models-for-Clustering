@@ -53,7 +53,7 @@ Load the fundamental library `BNPmix` to implement the algorithm which provides 
 
 Now set the **hyperparameters** that regulate the prior information. Setting the **discount parameter** to 0 is crucial, as it leads to a Dirichlet process, which is a specific case of the Pitman-Yor processes for which the function `PYdensity()` is designed. The **strength parameter** is determined by a Gamma(1,1) random variable as suggested in [`Escobar and West 1995`](https://user-web-p-u02.wpi.edu/~balnan/Escobar-West-1995.pdf). The last argument is k0 that is the p-dimensional vector of **scale factors** defining the **normal base measure** on the **location parameter** and it is fixed empirically as a **p-vector of 1/2**. Actually there are a lot of other parameters to modify, but we decided to leave the default values.
 
-The last arguments to decide are those for generating the posterior output. Being **interested in the estimated partition** put out_type equal to "CLUST".
+The last arguments to choose are those for generating the posterior output. Being **interested in the estimated partition** put out_type equal to "CLUST".
 
 ``` r
 library(BNPmix)
