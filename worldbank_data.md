@@ -162,7 +162,7 @@ world <- ne_countries(scale = "medium", returnclass = "sf")
 unique(world$name)
 unique(clust$country)
 
-country_corrections <- c(
+country_corrections = c(
   "Congo, Dem. Rep." = "Dem. Rep. Congo",
   "Congo, Rep." = "Congo",
   "Central African Republic" = "Central African Rep.",
@@ -176,7 +176,14 @@ country_corrections <- c(
   "Macedonia, FYR" = "North Macedonia",
   "St. Vincent and the Grenadines" = "St. Vin. and Gren.",
   "Equatorial Guinea"="Eq. Guinea",
-  "Cote d'Ivoire" = "CÃ´te d'Ivoire"
+  "Cote d'Ivoire" = "CÃ´te d'Ivoire",
+  "Russian Federation" = "Russia",
+  "Egypt, Arab Rep." = "Egypt",
+  "Niger" = "Nigeria",
+  "Iran, Islamic Rep." = "Iran",
+  "Turkiye" = "Turkey",
+  "Viet Nam" = "Vietnam",
+  "Korea, Rep." = "South Korea"
 )
 
 clust <- clust %>%
@@ -186,12 +193,14 @@ world <- left_join(world, clust, by = c("name" = "country"))
 
 ggplot(data = world) +
   geom_sf(aes(fill = factor(cluster))) +  
-  scale_fill_manual(values = c("1" = 'yellow', "2" = 'red', "3" = 'green',
-                               "4" = 'orange', "5" = 'purple', "6" = 'blue', na.value = 'grey'),
+  scale_fill_manual(values = c("1" = 'yellow', "2" = 'green', "3" = 'red',
+                               "4" = 'orange', "5" = 'purple', "6" = 'blue',
+                               "7" = 'pink', "8" = 'violet', na.value = 'grey'),
                     name = 'Cluster VI salso',
-                    labels = c('1', '2', '3', '4', '5', '6', 'No data available')
+                    labels = c('1', '2', '3', '4', '5', '6', '7','8','Valori non registrati')
   ) + 
   theme_minimal() +
+  labs(fill = "Cluster", title = "Anno 2022") +
   theme(legend.position = "bottom")
 ```
 Let's consider the graph below. The Dirichlet process mixture model identifies **6 different clusters** and it's quite easy to recognize some patterns in the partition. Focus on the `Green` cluster, which includes nations that belong to the **West**, not in a geographical sense, but rather in a political and economic context. For example **Japan, South Corea and Australia** are part of this cluster but they are not located in Europe or North America, therefore we can say that these `Green` countries are those that are more developed in socio-economic and health terms.
