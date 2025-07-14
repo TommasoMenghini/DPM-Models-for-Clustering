@@ -215,7 +215,7 @@ The `Purple` cluster contains four countries: Equatorial Guinea, Mongolia, Niger
 The last cluster is the `Blue` one, which is not visible on the world map and contains three states: **Luxembourg, Malta, and Singapore**. In this case, it is fairly simple to understand what these nations have in common: they are geographically **very small** and can be (and still are) labeled as **tax havens**.
 
 
-![](https://raw.githubusercontent.com/TommasoMenghini/DPM-Models-for-Clustering/main/img/World2010.png)
+![](https://raw.githubusercontent.com/TommasoMenghini/DPM-Models-for-Clustering/main/img/World2022.png)
 
 Run the following code to build a frequency table of the clusters.
 
