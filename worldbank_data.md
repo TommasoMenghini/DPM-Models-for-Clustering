@@ -203,7 +203,11 @@ ggplot(data = world) +
   labs(fill = "Cluster", title = "Anno 2022") +
   theme(legend.position = "bottom")
 ```
-Let's consider the graph below. The Dirichlet process mixture model identifies **6 different clusters** and it's quite easy to recognize some patterns in the partition. Focus on the `Green` cluster, which includes nations that belong to the **West**, not in a geographical sense, but rather in a political and economic context. For example **Japan, South Corea and Australia** are part of this cluster but they are not located in Europe or North America, therefore we can say that these `Green` countries are those that are more developed in socio-economic and health terms.
+Let's consider the graph below. The Dirichlet process mixture model identifies **8 different clusters**. When comparing these results with those reported in the [`country_data.md`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/country_data.md) file; it can be observed that the `Red` and `Yellow` clusters retain a similar interpretation. However, there are also significant shifts that highlight how the global landscape has changed over the twelve years separating this graph from the earlier one. **India** is a stricking example: in the 2010 graph it was classified as a `Yellow` country, but in the 2022 graph it had shifted to a `Red` one. his transition aligns with expectations, as India is a developing country in several respects—not only economically, but also culturally and politically. 
+
+Before delving into further considerations similar to the previous one, it is necessary to make a brief disclaimer. There are no theoretical reasons to assume that the clustering obtained in the [`country_data.md`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/country_data.md) example should have any direct relationship with the clustering showed in the current graph. Even though this is undoubtedly true, it is also evident that some clusters share common countries across both examples, and therefore reflect common traits. For insance the `Red` cluster contains in both examples the countries that could be associated with the **Second Wold**, while the `Yellow` cluster is made up of poorer nations typically classified as part of the **Third World**. Encouraged by these parallels, we now turn our attention to three countries of particular interest: **China**, **Saudi Arabia** and **Ireland**. 
+
+Focus on the `Green` cluster, which includes nations that belong to the **West**, not in a geographical sense, but rather in a political and economic context. For example **Japan, South Corea and Australia** are part of this cluster but they are not located in Europe or North America, therefore we can say that these `Green` countries are those that are more developed in socio-economic and health terms.
 
 The `Red` cluster contains countries that, at least in 2010, could be considered part of the **Second World** . These nations exhibit **varying levels of economic development**, often characterized by **strong industrialization** but also by **shortages in consumer goods** and living standards that are not consistently high. For example, the **Russian Federation** and **Brazil** are part of this cluster, which is convincing because these nations are known for economies heavily reliant on exporting raw materials such as natural gas and wood.
 
@@ -226,7 +230,8 @@ table(clust$cluster)[1]
 
 tab <- c(table(clust$cluster)[1], table(clust$cluster)[2],
          table(clust$cluster)[3], table(clust$cluster)[4],
-         table(clust$cluster)[5], table(clust$cluster)[6])
+         table(clust$cluster)[5], table(clust$cluster)[6],
+         table(clust$cluster)[6], table(clust
 
 table <- data.frame(
   Yellow = tab[1],
@@ -240,12 +245,12 @@ table <- data.frame(
 kable(table, format = "markdown")
 ```
 
-| Yellow| Red| Green| Orange| Purple| Blue|
-|------:|---:|-----:|------:|------:|----:|
-|     58|  66|    29|      7|      4|    3|
+| Yellow| Red| Green| Orange| Purple| Blue| Pink| Violet|
+|------:|---:|-----:|------:|------:|----:|----:|------:|
+|     41|  47|    58|      5|      1|    4|    1|      2|
 
 
-The resulting table shows the frequency of each cluster, note that the largest clusters are the `Yellow` and `Red` ones.
+The resulting table shows the frequency of each cluster.
 
 Scaled GDP per capita density plot
 ------------------
