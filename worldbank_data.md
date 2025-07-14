@@ -135,7 +135,7 @@ pairs(x, col = labels.salso.VI, pch = 19)
 Graphical Results
 ================
 
-This section contains codes to build two plots: 
+This section contains the code to build two plots: 
 - the **World Map**, that clearly shows the partition of countries that we obtained minimizing the posterior expected loss;
 - the **Scaled GDP per Capita Density Plot**, which shows the estimated density of a scaled variable from the dataset. The optimal clustering estimate is also highlighted, with colours representing cluster membership.
   
