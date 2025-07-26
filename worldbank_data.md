@@ -251,58 +251,98 @@ Convinced by these arguments, we will study the cases of **China, Saudi Arabia, 
 
 ``` r
 
-scaled.gdp <- scale(data$gdpp)
-df <- as.data.frame(cbind(scaled.gdp, clust$cluster, data$country))
-colnames(df) <- c('scaled.gdpp','cluster', "Country")
+load("2010data.RData")
+
+country2022 <- clust$country
+country2010 == country2022
+length(country2022); length(country2010)
+
+labels.2010
+
+# Devo associare ad ogni nazione nel dataset del 2022 la label che avevo calcolato nel 
+# 2010. Il problema è che non tutte le nazioni nel 2010 ci sono nel 2022.
+
+# Prima di tutto però ordino le nazioni sia per il 2022 che per il 2010 in ordine 
+# alfabetico, questo ritornerà utile per la giusta associazione di ogni label ad
+# ogni nazione
+
+country2022 <- sort(country2022)
+
+dt <- data.frame(country2010, labels.2010)
+dt <- dt %>% arrange(country2010)
+
+index.common_nations <- which(dt$country2010 %in% country2022)
+labels.2010_common <- dt$labels.2010[index.common_nations]
+country2010_common <- dt$country2010[index.common_nations]
+length(country2010_common)
+
+# Devo considerare il GDP pro capite solo delle nazioni che ho individuato come comuni
+# ad entrambi gli anni.
+
+data$country.corr <- clust$country
+dt <- data %>% select(gdpp, country.corr) %>% arrange(country.corr)
+dt <- dt %>% filter(country.corr %in% country2010_common)
+
+scaled.gdp <- scale(dt$gdpp)
+length(scaled.gdp)
+
+
+df <- as.data.frame(cbind(scaled.gdp, country2010_common, labels.2010_common))
+colnames(df) <- c('scaled.gdpp','country', "cluster")
+
 
 str(df)
+df$scaled.gdpp <- as.numeric(df$scaled.gdpp)
 
-which(data$country == "China")
-which(data$country == "Ireland")
-which(data$country == "Saudi Arabia")
+which(df$country == "China")
+which(df$country == "Ireland")
+which(df$country == "Saudi Arabia")
 
-      
-density_estimate <- density(scaled.gdp)
 
-densities <- approx(density_estimate$x, density_estimate$y, xout = scaled.gdp)$y
-length(densities)
-length(data$country)
 
-ggplot(df, aes(x = as.numeric(scaled.gdpp))) +
-  geom_density() +  
-  geom_point(aes(y = densities , color = as.factor(cluster)),  
+density_estimate <- density(df$scaled.gdpp)
+# Interpola i valori di densità per il tuo vettore x
+densities <- approx(density_estimate$x, density_estimate$y, xout = df$scaled.gdpp)$y
+
+
+
+ggplot(df, aes(x = scaled.gdpp)) +
+  geom_density() +  # Stima della densità
+  geom_point(aes(y = densities , color = as.factor(cluster)),  # Punti colorati per cluster
              position = position_jitter(height = 0.01), size = 2) +
   scale_color_manual(values = c("1" = 'yellow', "2" = 'red', "3" = 'green',
                                 "4" = 'orange', "5" = 'purple', "6" = 'blue', na.value = 'grey'),
                      name = 'Cluster VI salso',
                      labels = c('1', '2', '3', '4', '5', '6', 'No data available')
   ) +  
-  labs(x = "Scaled GDP per capita", y = "") +
+  labs(title = "Densità stimata con punti colorati per cluster",
+       x = "GDP per capita scalato",
+       y = "Densità") +
   theme_minimal() +
-  theme(legend.position = "none")  +
-  annotate("text", x = 1+0.04, 
-           y = densities[35] + 0.04, 
+  theme(legend.position = "top") +
+  annotate("text", x = df$scaled.gdpp[31]+0.55, 
+           y = densities[31] + 0.04, 
            label = "China", color = "black", size = 3, hjust = 0, fontface = "bold") +
-  annotate("segment", x = as.numeric(df$scaled.gdpp[df$Country == "China"]), 
-           xend = 1, 
-           y = densities[35], 
-           yend = densities[35]+0.02, 
+  annotate("segment", x = df$scaled.gdpp[31], 
+           xend = df$scaled.gdpp[31]+0.5, 
+           y = densities[31], 
+           yend = densities[31]+0.02, 
            arrow = arrow(length = unit(0.2, "cm")), color = "black") +
-  annotate("text", x = 1+0.04, 
-           y = 0.3+0.04, 
+  annotate("text", x = df$scaled.gdpp[110]+0.55, 
+           y = densities[110]+0.04, 
            label = "Saudi Arabia", color = "black", size = 3, hjust = 0, fontface = "bold") +
-  annotate("segment", x = as.numeric(df$scaled.gdpp[df$Country == "Saudi Arabia"]), 
-           xend = 1, 
-           y = densities[129], 
-           yend = 0.3, 
+  annotate("segment", x = df$scaled.gdpp[110], 
+           xend = df$scaled.gdpp[110]+0.5, 
+           y = densities[110], 
+           yend = densities[110] + 0.02, 
            arrow = arrow(length = unit(0.2, "cm")), color = "black") +
-  annotate("text", x = 3+0.04, 
-           y = 0.3+0.04, 
+  annotate("text", x = df$scaled.gdpp[65], 
+           y =  densities[65]+0.25, 
            label = "Ireland", color = "black", size = 3, hjust = 0, fontface = "bold") +
-  annotate("segment", x = as.numeric(df$scaled.gdpp[df$Country == "Ireland"]), 
-           xend = 3, 
-           y = densities[74], 
-           yend = 0.3, 
+  annotate("segment", x = df$scaled.gdpp[65], 
+           xend = df$scaled.gdpp[65], 
+           y = densities[65], 
+           yend =  densities[65]+0.2, 
            arrow = arrow(length = unit(0.2, "cm")), color = "black") 
 
 ```
