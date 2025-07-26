@@ -306,6 +306,9 @@ Finally we plot our results. The aim of this graph is to assess whether a countr
 
 We can observe that **China** has made a significant shift toward the right tail of the distribution. This result is consistent with what is shown on the **World map** above: now **China** is a `Green` state, whereas in **2010** was labeled as a `Red` one. This outcome is not surprising as it is known that **China** undergone tremendous development in its socio-economic infrastructure and has assumed a central role in international politics.
 
+By comparing the two **World Maps** , we can also observe that Saudi Arabia no longer belongs to the `Orange` cluster; it is now labeled as a `Green` country. However when examining the graph below and comparing the position of the nation on the curve to where it was previously, we do not see a significant shift toward the right tail of the distribution. This suggests that the improvement is not primarily in economic infrastructure, but rather in cultural and political aspects.
+
+**Ireland** was labeled as a `Green` state in **2010**. However in **2022** it was classified as a `Blue` one, alongside Luxembourg, Malta and Singapore. These countries are well known as fiscal paradises — indeed nations with exceptionally high GDP per capita levels. This transformation of Ireland is accurately reflected in the graph below: we observe a substantial shift toward the right tail of the distribution.
 
 ``` r
 
