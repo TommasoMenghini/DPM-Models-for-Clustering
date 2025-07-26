@@ -302,49 +302,50 @@ densities <- approx(density_estimate$x, density_estimate$y, xout = df$scaled.gdp
 
 ```
 
-Finally we plot our results. 
+Finally we plot our results. The aim of this graph is to assess whether a country has shifted towards the right tail of the distribution, comparing its position in the plot below with the one on the corresponding plot in [`country_data.md`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/country_data.md). Such a shift would suggest that the country has improved its economic, social and political conditions over the time interval considered. Indeed the wealthiest countries are situated closer to the right tail of the distributions. 
+
+We can observe that **China** has made a significant shift toward the right tail of the distribution. This result is consistent with what is shown on the **World map** above: now **China** is a `Green` state, whereas in **2010** was labeled as a `Red` one. This outcome is not surprising as it is known that **China** undergone tremendous development in its socio-economic infrastructure and has assumed a central role in international politics.
 
 
 ``` r
 
 ggplot(df, aes(x = scaled.gdpp)) +
-  geom_density() +  # Stima della densità
-  geom_point(aes(y = densities , color = as.factor(cluster)),  # Punti colorati per cluster
-             position = position_jitter(height = 0.01), size = 2) +
+  geom_density(size = 1.5) +  
+  geom_point(aes(y = densities , color = as.factor(cluster)),  
+             position = position_jitter(height = 0.01), size = 4) +
   scale_color_manual(values = c("1" = 'yellow', "2" = 'red', "3" = 'green',
                                 "4" = 'orange', "5" = 'purple', "6" = 'blue', na.value = 'grey'),
                      name = 'Cluster VI salso',
                      labels = c('1', '2', '3', '4', '5', '6', 'No data available')
   ) +  
-  labs(title = "Densità stimata con punti colorati per cluster",
-       x = "GDP per capita scalato",
-       y = "Densità") +
+  labs(x = "Scaled GDP per capita",
+       y = NULL) +
   theme_minimal() +
-  theme(legend.position = "top") +
+  theme(legend.position = "none", text = element_text(size = 20))  +
   annotate("text", x = df$scaled.gdpp[31]+0.55, 
            y = densities[31] + 0.04, 
-           label = "China", color = "black", size = 3, hjust = 0, fontface = "bold") +
+           label = "China", color = "black", size = 10, hjust = 0, fontface = "bold") +
   annotate("segment", x = df$scaled.gdpp[31], 
            xend = df$scaled.gdpp[31]+0.5, 
            y = densities[31], 
            yend = densities[31]+0.02, 
-           arrow = arrow(length = unit(0.2, "cm")), color = "black") +
+           arrow = arrow(length = unit(0.2, "cm")), color = "black", linewidth = 2) +
   annotate("text", x = df$scaled.gdpp[110]+0.55, 
            y = densities[110]+0.04, 
-           label = "Saudi Arabia", color = "black", size = 3, hjust = 0, fontface = "bold") +
+           label = "Saudi Arabia", color = "black", size = 10, hjust = 0, fontface = "bold") +
   annotate("segment", x = df$scaled.gdpp[110], 
            xend = df$scaled.gdpp[110]+0.5, 
            y = densities[110], 
            yend = densities[110] + 0.02, 
-           arrow = arrow(length = unit(0.2, "cm")), color = "black") +
+           arrow = arrow(length = unit(0.2, "cm")), color = "black", linewidth = 2) +
   annotate("text", x = df$scaled.gdpp[65], 
            y =  densities[65]+0.25, 
-           label = "Ireland", color = "black", size = 3, hjust = 0, fontface = "bold") +
+           label = "Ireland", color = "black", size = 10, hjust = 0, fontface = "bold") +
   annotate("segment", x = df$scaled.gdpp[65], 
            xend = df$scaled.gdpp[65], 
            y = densities[65], 
            yend =  densities[65]+0.2, 
-           arrow = arrow(length = unit(0.2, "cm")), color = "black") 
+           arrow = arrow(length = unit(0.2, "cm")), color = "black", linewidth = 2) 
 
 ```
 
