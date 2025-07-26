@@ -207,18 +207,6 @@ Let's consider the graph below. The Dirichlet process mixture model identifies *
 
 Before delving into further considerations similar to the previous one, it is necessary to make a brief disclaimer. There are no theoretical reasons to assume that the clustering obtained in the [`country_data.md`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/country_data.md) example should have any direct relationship with the clustering showed in the current graph. Even though this is undoubtedly true, it is also evident that some clusters share common countries across both examples, and therefore reflect common traits. For insance the `Red` cluster contains in both examples the countries that could be associated with the **Second Wold**, while the `Yellow` cluster is made up of poorer nations typically classified as part of the **Third World**. Encouraged by these parallels, we now turn our attention to three countries of particular interest: **China**, **Saudi Arabia** and **Ireland**. 
 
-Focus on the `Green` cluster, which includes nations that belong to the **West**, not in a geographical sense, but rather in a political and economic context. For example **Japan, South Corea and Australia** are part of this cluster but they are not located in Europe or North America, therefore we can say that these `Green` countries are those that are more developed in socio-economic and health terms.
-
-The `Red` cluster contains countries that, at least in 2010, could be considered part of the **Second World** . These nations exhibit **varying levels of economic development**, often characterized by **strong industrialization** but also by **shortages in consumer goods** and living standards that are not consistently high. For example, the **Russian Federation** and **Brazil** are part of this cluster, which is convincing because these nations are known for economies heavily reliant on exporting raw materials such as natural gas and wood.
-
-Focusing on the `Yellow` cluster, notice that it is spread across the Sub-Saharan region and the Indian subcontinent. Therefore, these states can be labeled as **Third World countries** —less developed economically, politically, and socially.
-
-Let's talk about the `Orange` cluster: it contains only seven states — **Bahrain, Brunei, Kuwait, Oman, Qatar, Saudi Arabia, and the United Arab Emirates**. All these countries belong to the **Arabian Peninsula**, and they lead the global export of **oil**. That's why they are extremely wealthy nations. This wealth, however, is distributed in a highly unequal way: very few people, mainly the political and social elite, possess it. This is the most convincing argument that distinguishes these states from the `Green` ones. Furthermore, note that the only country in the Arabian Peninsula that does not belong to the `Orange` cluster is Yemen. Although **Yemen** possesses significant oil reserves, in 2010 it was not (and still is not) a major exporter of petroleum. The causes can be traced to internal difficulties such as civil war, corruption, and lacking infrastructure.
-
-The `Purple` cluster contains four countries: Equatorial Guinea, Mongolia, Nigeria, and Venezuela. This time, there is no recognizable pattern.
-The last cluster is the `Blue` one, which is not visible on the world map and contains three states: **Luxembourg, Malta, and Singapore**. In this case, it is fairly simple to understand what these nations have in common: they are geographically **very small** and can be (and still are) labeled as **tax havens**.
-
-
 ![](https://raw.githubusercontent.com/TommasoMenghini/DPM-Models-for-Clustering/main/img/World2022.png)
 
 Run the following code to build a frequency table of the clusters.
@@ -319,7 +307,6 @@ ggplot(df, aes(x = as.numeric(scaled.gdpp))) +
 
 ```
 
-The inferences drawn from this plot will be discussed in the [`worldbank_data.md`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/worldbank_data.md) file. However, the main idea is to **observe the presence (or absence) of a shift to the right tail** of the distribution for a certain country, which could indicate its socio-economic development.
 
 
 ![](https://raw.githubusercontent.com/TommasoMenghini/DPM-Models-for-Clustering/main/img/GDPP_2010.png)
