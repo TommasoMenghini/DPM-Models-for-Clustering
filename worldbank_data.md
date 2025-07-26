@@ -243,11 +243,10 @@ The resulting table shows the frequency of each cluster.
 Scaled GDP per capita density plot
 ------------------
 
-In the [`worldbank_data.md`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/worldbakn_data.md) file, another World Map is created using data from 2022 instead of 2010, as shown in this example. Naturally, a different optimal partition that minimizes the posterior expected loss will be obtained. However, while it is not something to take for granted and caution is advised, **it is reasonable to compare clusters from different optimal partitions—the 2010 and the 2022 partitions**.
+As introduced in the [`country_data.md`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/country_data.md) file let's now discuss about the **density of the scaled GDP per capita** plot, where each point represents a specific country and is colored according to the **2010 clustering partion**. The density of this feature was estimated using the R function `density()`, which computes kernel density estimates. Although alternative density estimation methods might be more elegant, we opted for this approach due to time constraints.
 
-To pursue this objective, the plot below was created. It depicts the **density of the scaled GDP per capita**, where each point represents a specific country and is colored according to cluster membership. The density of this feature was estimated using the R function `density()`, which computes kernel density estimates. Although alternative density estimation methods might be more elegant, we opted for this approach due to time constraints.
+As said before we address the case of  **China**, **Saudi Arabia** and **Ireland**. 
 
-Convinced by these arguments, we will study the cases of **China, Saudi Arabia, and Ireland**.
 
 ``` r
 
@@ -258,6 +257,7 @@ country2010 == country2022
 length(country2022); length(country2010)
 
 labels.2010
+
 
 # Devo associare ad ogni nazione nel dataset del 2022 la label che avevo calcolato nel 
 # 2010. Il problema è che non tutte le nazioni nel 2010 ci sono nel 2022.
