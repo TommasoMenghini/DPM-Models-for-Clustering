@@ -243,10 +243,9 @@ The resulting table shows the frequency of each cluster.
 Scaled GDP per capita density plot
 ------------------
 
-As introduced in the [`country_data.md`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/country_data.md) file let's now discuss about the **density of the scaled GDP per capita** plot, where each point represents a specific country and is colored according to the **2010 clustering partion**. The density of this feature was estimated using the R function `density()`, which computes kernel density estimates. Although alternative density estimation methods might be more elegant, we opted for this approach due to time constraints.
+As introduced in the [`country_data.md`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/country_data.md) file let's now discuss about the **density of the scaled GDP per capita** plot, where each point represents a specific country and is colored according to the **2010 clustering partion**. The density of this feature was estimated using the R function `density()`, which computes kernel density estimates. Although alternative density estimation methods might be more elegant, we opted for this approach due to time constraints. As said before we address the case of  **China**, **Saudi Arabia** and **Ireland**. 
 
-As said before we address the case of  **China**, **Saudi Arabia** and **Ireland**. 
-
+First we load some relevant quantities obtained from the [`country_data.md`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/country_data.md) file.
 
 ``` r
 
@@ -256,15 +255,12 @@ country2022 <- clust$country
 country2010 == country2022
 length(country2022); length(country2010)
 
-labels.2010
+```
 
+Now we have to assign to each country in the 2022 dataset the label that was obtained in the 2010 study. The problem is that not all countries present in 2010 are also present in 2022 but first, we need to sort the countries in both the 2022 and 2010 datasets in alphabetical order.
+This will be useful for correctly matching each label to the corresponding country.
 
-# Devo associare ad ogni nazione nel dataset del 2022 la label che avevo calcolato nel 
-# 2010. Il problema è che non tutte le nazioni nel 2010 ci sono nel 2022.
-
-# Prima di tutto però ordino le nazioni sia per il 2022 che per il 2010 in ordine 
-# alfabetico, questo ritornerà utile per la giusta associazione di ogni label ad
-# ogni nazione
+``` r
 
 country2022 <- sort(country2022)
 
@@ -276,8 +272,11 @@ labels.2010_common <- dt$labels.2010[index.common_nations]
 country2010_common <- dt$country2010[index.common_nations]
 length(country2010_common)
 
-# Devo considerare il GDP pro capite solo delle nazioni che ho individuato come comuni
-# ad entrambi gli anni.
+```
+
+Of course we need to consider only the GDP per capita of nations detected as common between the two years. Then it is straightforward to obtain the density estimation with the R function `density()`.
+
+``` r
 
 data$country.corr <- clust$country
 dt <- data %>% select(gdpp, country.corr) %>% arrange(country.corr)
@@ -286,10 +285,8 @@ dt <- dt %>% filter(country.corr %in% country2010_common)
 scaled.gdp <- scale(dt$gdpp)
 length(scaled.gdp)
 
-
 df <- as.data.frame(cbind(scaled.gdp, country2010_common, labels.2010_common))
 colnames(df) <- c('scaled.gdpp','country', "cluster")
-
 
 str(df)
 df$scaled.gdpp <- as.numeric(df$scaled.gdpp)
@@ -301,10 +298,14 @@ which(df$country == "Saudi Arabia")
 
 
 density_estimate <- density(df$scaled.gdpp)
-# Interpola i valori di densità per il tuo vettore x
 densities <- approx(density_estimate$x, density_estimate$y, xout = df$scaled.gdpp)$y
 
+```
 
+Finally we plot our results. 
+
+
+``` r
 
 ggplot(df, aes(x = scaled.gdpp)) +
   geom_density() +  # Stima della densità
