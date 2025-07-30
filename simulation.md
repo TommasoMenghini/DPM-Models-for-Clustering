@@ -11,10 +11,21 @@ As described in the [`README.md`](https://github.com/TommasoMenghini/DPM-Models-
 Generating the Simulated Dataset
 ================
 
-In the simulation study we decided to generate 300 observation from a trivariate Gaussian mixture of 5 components. It can be written as:
-$
-a^2 + b^2 = c^2
-$
+In the simulation study we decided to generate 300 observation from a **trivariate Gaussian mixture** of **5 components**. In the following table the means and variances of the components are shown:
+
+<div align="center">
+
+
+|               | j  =   1 |  j  =  2 | j = 3    | j = 4    | j = 5    |
+|---------------|----------|----------|----------|----------|----------|
+| $\mu_1$       |    -2    |     2    |   -2     |     2    |      0   |
+| $\mu_2$       |     -2   |     -2   |    2     |    2     |     0    |
+| $\mu_3$       |      -2  |      2   |    -2    |    2     |     0    |
+| $\sigma^2$    |     1.00 |  1.25    |   1.00   |    1.25  |      0.50|
+
+</div>
+
+Below we provide the code to obtain such a simulated data.
 
 ``` r
 rm(list=ls())
@@ -75,3 +86,5 @@ x <- sim_data[,c(1:3)]
 cls.true <- sim_data[, 4]
 
 ```
+
+
