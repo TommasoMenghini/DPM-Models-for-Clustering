@@ -87,4 +87,34 @@ cls.true <- sim_data[, 4]
 
 ```
 
+It is useful to visualize the simulated data. Since the sample space is tridimensional, we suggest using interactive 3d plots to better understand the data. We used some useful libraries to help us in that sense and the code is shown below.
+
+``` r
+library(scatterplot3d)
+library(plotly)
+library(rgl)
+
+# Interactive 3D plot
+plot3d(x[,1], x[,2], x[,3], col = sim_data$Componente,
+       type = "s", size = 1, xlab = "X1", ylab = "X2", zlab = "X3")
+
+
+# Static 3D Plot
+scatterplot3d(sim_data$X1, sim_data$X2, sim_data$X3, color = as.numeric(sim_data$Componente), pch = 19,
+              main = "Grafico 3D statico dei dati simulati", xlab = "X1", ylab = "X2", zlab = "X3")
+
+
+# Alternative Interactive 3D Plot
+fig <- plot_ly(sim_data, x = ~X1, y = ~X2, z = ~X3, color = ~Componente, colors = "Set2", 
+               type = "scatter3d", mode = "markers", marker = list(size = 3))
+
+fig <- fig %>% layout(scene = list(xaxis = list(title = 'X1'),
+                                   yaxis = list(title = 'X2'),
+                                   zaxis = list(title = 'X3')),
+                      title = "3D Interactive Scatterplot")
+
+fig
+
+```
+
 
