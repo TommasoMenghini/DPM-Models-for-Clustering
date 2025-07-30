@@ -123,15 +123,15 @@ The figure shown refers to the last plot presented in the code.
 MCMC Sample Generation
 ================
 
-Load the fundamental library `BNPmix` to implement the algorithm which provides i.i.d. samples from the latent partition posterior. First set the number of iterations and burn-in of the MCMC chain. Then select the MCMC sampling method to be used, we were interested in the marginal sampler MAR by Neal 2000. The model is set to be DLS for a detailed and useful explanation see the BNPmix manual. Lastly hyper is equal to FALSE so hyperprior distributions on the base measures's parameter are not added.
+Load the fundamental library `BNPmix` to implement the algorithm which provides **i.i.d. samples** from the latent partition posterior. First set the **number of iterations** and **burn-in** of the MCMC chain. Then select the MCMC sampling method to be used, we were interested in the marginal sampler MAR by [`Neal 2000`](https://www.jstor.org/stable/1390653). The model is set to be **DLS** for a detailed and useful explanation see the [`BNPmix manual`](https://cran.r-project.org/web/packages/BNPmix). Lastly hyper is equal to FALSE so hyperprior distributions on the base measures's parameter are not added.
 
-Now, we set the hyperparameters that govern the prior information. Setting the discount parameter to 0 is crucial, as this results in a Dirichlet process— a special case of the Pitman–Yor process for which the function PYdensity() is designed. The strength parameter is drawn from a Gamma(1,1) distribution, as suggested by Escobar and West (1995).
+Now, we set the **hyperparameters** that govern the **prior information**. Setting the **discount parameter** to 0 is crucial, as this results in a **Dirichlet process**— a special case of the Pitman–Yor process for which the function `PYdensity()` is designed. The **strength parameter** is drawn from a `Gamma(1,1)` distribution, as suggested by [`Escobar and West 1995`](https://user-web-p-u02.wpi.edu/~balnan/Escobar-West-1995.pdf).
 
-The parameters m0 and k0 represent the mean vector and the vector of scale factors that define the normal base measure on the location parameter. These were set as a three-dimensional vector of zeros and a three-dimensional vector of 1/2, respectively.
+The parameters `m0` and `k0` represent the **mean vector** and the **vector of scale factors** that define the normal base measure on the location parameter. These were set as a three-dimensional vector of zeros and a three-dimensional vector of 1/2, respectively.
 
-Similarly, a0 and b0—which are vectors of shape and scale parameters defining the base measure on the scale parameters—were set as a three-dimensional vector of twos and a three-dimensional vector of ones, respectively.
+Similarly, `a0` and `b0` —which are **vectors of shape and scale parameters** defining the base measure on the scale parameters—were set as a three-dimensional vector of twos and a three-dimensional vector of ones, respectively.
 
-
+Finally, execute the code below.
 
 ``` r
 library(BNPmix)
