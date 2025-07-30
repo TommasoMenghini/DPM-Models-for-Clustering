@@ -117,4 +117,11 @@ fig
 
 ```
 
+The figure shown refers to the last plot presented in the code.
+![](https://raw.githubusercontent.com/TommasoMenghini/DPM-Models-for-Clustering/main/img/Scatterplot3d.png)
+
+Generating the Simulated Dataset
+================
+
+
 
