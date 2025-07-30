@@ -123,23 +123,26 @@ The figure shown refers to the last plot presented in the code.
 MCMC Sample Generation
 ================
 
+Load the fundamental library `BNPmix` to implement the algorithm which provides i.i.d. samples from the latent partition posterior. First set the number of iterations and burn-in of the MCMC chain. Then select the MCMC sampling method to be used, we were interested in the marginal sampler MAR by Neal 2000. The model is set to be DLS for a detailed and useful explanation see the BNPmix manual. Lastly hyper is equal to FALSE so hyperprior distributions on the base measures's parameter are not added.
+
+The parameters m0 and k0 represent the mean vector and the vector of scale factors that define the normal base measure on the location parameter. These were set as a three-dimensional vector of zeros and a three-dimensional vector of 1/2, respectively.
+
+Similarly, a0 and b0—which are vectors of shape and scale parameters defining the base measure on the scale parameters—were set as a three-dimensional vector of twos and a three-dimensional vector of ones, respectively.
 
 
 
+``` r
+library(BNPmix)
 
+prior <- list(strenght = rgamma(1,1,1), discount = 0, m0 = c(0,0,0), k0 = c(1/2,1/2,1/2),
+              a0 = c(2,2,2), b0 = c(1,1,1))
+output <- list(out_type = 'CLUST')
+mcmc <- list(niter = 10000, nburn = 1000, method = "MAR", model = "DLS", 
+             hyper = F)
+set.seed(123)
+fit <- PYdensity(y = x, mcmc = mcmc, prior = prior,
+                 output = output)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+```
 
 
