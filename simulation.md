@@ -83,26 +83,15 @@ library(plotly)
 library(rgl)
 
 # Interactive 3D plot
-plot3d(x[,1], x[,2], x[,3], col = sim_data$Componente,
-       type = "s", size = 1, xlab = "X1", ylab = "X2", zlab = "X3")
-
+plot3d(x[,1], x[,2], x[,3], col = sim_data$Componente, type = "s", size = 1, xlab = "X1", ylab = "X2", zlab = "X3")
 
 # Static 3D Plot
-scatterplot3d(sim_data$X1, sim_data$X2, sim_data$X3, color = as.numeric(sim_data$Componente), pch = 19,
-              main = "Grafico 3D statico dei dati simulati", xlab = "X1", ylab = "X2", zlab = "X3")
-
+scatterplot3d(sim_data$X1, sim_data$X2, sim_data$X3, color = as.numeric(sim_data$Componente), pch = 19, main = "Grafico 3D statico dei dati simulati", xlab = "X1", ylab = "X2", zlab = "X3")
 
 # Alternative Interactive 3D Plot
-fig <- plot_ly(sim_data, x = ~X1, y = ~X2, z = ~X3, color = ~Componente, colors = "Set2", 
-               type = "scatter3d", mode = "markers", marker = list(size = 3))
-
-fig <- fig %>% layout(scene = list(xaxis = list(title = 'X1'),
-                                   yaxis = list(title = 'X2'),
-                                   zaxis = list(title = 'X3')),
-                      title = "3D Interactive Scatterplot")
-
+fig <- plot_ly(sim_data, x = ~X1, y = ~X2, z = ~X3, color = ~Componente, colors = "Set2", type = "scatter3d", mode = "markers", marker = list(size = 3))
+fig <- fig %>% layout(scene = list(xaxis = list(title = 'X1'), yaxis = list(title = 'X2'), zaxis = list(title = 'X3')), title = "3D Interactive Scatterplot")
 fig
-
 ```
 
 The figure shown refers to the last plot presented in the code.
@@ -132,7 +121,6 @@ mcmc <- list(niter = 10000, nburn = 1000, method = "MAR", model = "DLS",
 set.seed(123)
 fit <- PYdensity(y = x, mcmc = mcmc, prior = prior,
                  output = output)
-
 ```
 The convergence of the MCMC sampler was assessed by tracking the entropy of the sampled partitions. Entropy provides a compact summary of partition complexity, jointly accounting for both the number of clusters and their relative sizes.
 
@@ -157,7 +145,6 @@ entropy <- as.mcmc(entropy)
 plot(entropy)
 
 geweke.diag(entropy)
-
 ```
 
 Implementation of different **algorithms with VI and Binder loss functions*
