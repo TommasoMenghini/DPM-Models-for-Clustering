@@ -212,7 +212,8 @@ The different combinations of algorithms and loss functions are compared using s
 - **Adjusted Rand Index (ARI)**;
 - computational time;
 
-The results clearly show that loss choice plays a central role in posterior inference. Across all sample sizes, methods based on **VI** loss consistently recover the correct number of clusters and maintain stable performance. In contrast, **Binder**-based methods — unless explicitly calibrated — tend to generate many small clusters, especially as sample size increases.
+The results clearly show that the choice of the loss function plays a central role in posterior inference.  
+The simulation study was repeated for multiple sample sizes (not reported here for brevity), and across all considered settings, methods based on the **VI** loss consistently recovered the correct number of clusters and exhibited stable performance. In contrast, **Binder**-based methods — unless explicitly calibrated — tend to generate many small clusters, especially as sample size increases.
 
 From a computational perspective, **SALSO** combined with **VI** loss emerges as the most efficient solution: it provides results comparable to **Greedy–VI** while being orders of magnitude faster for large datasets.
 
