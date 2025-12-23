@@ -161,3 +161,16 @@ psm <- comp.psm(fit$clust)
 ```
 
 ## Greedy Search with Variation of Information
+
+The Greedy algorithm searches locally on the lattice of partitions to minimize the posterior expected VI loss. The resulting partition identifies five clusters, which matches the true number of components used in the data–generating process, we can see them in the table right below.
+
+``` r
+library(mcclust.ext)
+psm <- comp.psm(fit$clust)
+```
+
+|                                | j  =   1 |  j  =  2 | j = 3    | j = 4    | j = 5    |
+|--------------------------------|----------|----------|----------|----------|----------|
+| Real Cluster                   |    63    |     65   |   54     |     74   |     44   |
+| VI Greedy Search Cluster       |     56   |     66   |    58    |    72    |     48   |
+
