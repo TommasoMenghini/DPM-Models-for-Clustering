@@ -125,41 +125,25 @@ labels.clust <- summ.VI$estimate
 clust <- as.data.frame(cbind(cat, labels.clust))
 clust[,2] <- as.numeric(clust[,2])
 colnames(clust) <- c('country','cluster')
-str(clust)
+
 
 world <- ne_countries(scale = "medium", returnclass = "sf")
 unique(world$name)
 unique(clust$country)
 
-country_corrections <- c(
-  "Congo, Dem. Rep." = "Dem. Rep. Congo",
-  "Congo, Rep." = "Congo",
-  "Central African Republic" = "Central African Rep.",
-  "United States" = "United States of America",
-  "Czech Republic" =  "Czechia",
-  "Slovak Republic" = "Slovakia",
-  "Bosnia and Herzegovina" = "Bosnia and Herz.",
-  "Bulgaria"="Bulgaria",
-  "Kyrgyz Republic" = "Kyrgyzstan",
-  "Cambodia" = "Cambodia",
-  "Macedonia, FYR" = "North Macedonia",
-  "St. Vincent and the Grenadines" = "St. Vin. and Gren.",
-  "Equatorial Guinea"="Eq. Guinea",
-  "Cote d'Ivoire" = "CÃ´te d'Ivoire"
-)
+country_corrections <- c("Congo, Dem. Rep." = "Dem. Rep. Congo", "Congo, Rep." = "Congo", "Central African Republic" = "Central African Rep.", "United States" = "United States of America",
+  "Czech Republic" =  "Czechia", "Slovak Republic" = "Slovakia", "Bosnia and Herzegovina" = "Bosnia and Herz.", "Bulgaria"="Bulgaria", "Kyrgyz Republic" = "Kyrgyzstan",
+ "Cambodia" = "Cambodia",  "Macedonia, FYR" = "North Macedonia", "St. Vincent and the Grenadines" = "St. Vin. and Gren.", "Equatorial Guinea"="Eq. Guinea",
+  "Cote d'Ivoire" = "CÃ´te d'Ivoire")
 
-clust <- clust %>%
-  mutate(country = recode(country, !!!country_corrections))
+clust <- clust %>%  mutate(country = recode(country, !!!country_corrections))
 
 world <- left_join(world, clust, by = c("name" = "country"))
 
 ggplot(data = world) +
   geom_sf(aes(fill = factor(cluster))) +  
-  scale_fill_manual(values = c("1" = 'yellow', "2" = 'red', "3" = 'green',
-                               "4" = 'orange', "5" = 'purple', "6" = 'blue', na.value = 'grey'),
-                    name = 'Cluster VI salso',
-                    labels = c('1', '2', '3', '4', '5', '6', 'No data available')
-  ) + 
+  scale_fill_manual(values = c("1" = 'yellow', "2" = 'red', "3" = 'green', "4" = 'orange', "5" = 'purple', "6" = 'blue', na.value = 'grey'),
+                    name = 'Cluster VI salso', labels = c('1', '2', '3', '4', '5', '6', 'No data available')) + 
   theme_minimal() +
   theme(legend.position = "bottom")
 ```
@@ -222,13 +206,10 @@ scaled.gdp <- scale(data$gdpp)
 df <- as.data.frame(cbind(scaled.gdp, clust$cluster, data$country))
 colnames(df) <- c('scaled.gdpp','cluster', "Country")
 
-str(df)
-
 which(data$country == "China")
 which(data$country == "Ireland")
 which(data$country == "Saudi Arabia")
 
-      
 density_estimate <- density(scaled.gdp)
 
 densities <- approx(density_estimate$x, density_estimate$y, xout = scaled.gdp)$y
@@ -239,39 +220,17 @@ ggplot(df, aes(x = as.numeric(scaled.gdpp))) +
   geom_density() +  
   geom_point(aes(y = densities , color = as.factor(cluster)),  
              position = position_jitter(height = 0.01), size = 2) +
-  scale_color_manual(values = c("1" = 'yellow', "2" = 'red', "3" = 'green',
-                                "4" = 'orange', "5" = 'purple', "6" = 'blue', na.value = 'grey'),
-                     name = 'Cluster VI salso',
-                     labels = c('1', '2', '3', '4', '5', '6', 'No data available')
-  ) +  
+  scale_color_manual(values = c("1" = 'yellow', "2" = 'red', "3" = 'green', "4" = 'orange', "5" = 'purple', "6" = 'blue', na.value = 'grey'),
+                     name = 'Cluster VI salso', labels = c('1', '2', '3', '4', '5', '6', 'No data available')) +  
   labs(x = "Scaled GDP per capita", y = "") +
   theme_minimal() +
   theme(legend.position = "none")  +
-  annotate("text", x = 1+0.04, 
-           y = densities[35] + 0.04, 
-           label = "China", color = "black", size = 3, hjust = 0, fontface = "bold") +
-  annotate("segment", x = as.numeric(df$scaled.gdpp[df$Country == "China"]), 
-           xend = 1, 
-           y = densities[35], 
-           yend = densities[35]+0.02, 
-           arrow = arrow(length = unit(0.2, "cm")), color = "black") +
-  annotate("text", x = 1+0.04, 
-           y = 0.3+0.04, 
-           label = "Saudi Arabia", color = "black", size = 3, hjust = 0, fontface = "bold") +
-  annotate("segment", x = as.numeric(df$scaled.gdpp[df$Country == "Saudi Arabia"]), 
-           xend = 1, 
-           y = densities[129], 
-           yend = 0.3, 
-           arrow = arrow(length = unit(0.2, "cm")), color = "black") +
-  annotate("text", x = 3+0.04, 
-           y = 0.3+0.04, 
-           label = "Ireland", color = "black", size = 3, hjust = 0, fontface = "bold") +
-  annotate("segment", x = as.numeric(df$scaled.gdpp[df$Country == "Ireland"]), 
-           xend = 3, 
-           y = densities[74], 
-           yend = 0.3, 
-           arrow = arrow(length = unit(0.2, "cm")), color = "black") 
-
+  annotate("text", x = 1+0.04, y = densities[35] + 0.04, label = "China", color = "black", size = 3, hjust = 0, fontface = "bold") +
+  annotate("segment", x = as.numeric(df$scaled.gdpp[df$Country == "China"]), xend = 1, y = densities[35], yend = densities[35]+0.02, arrow = arrow(length = unit(0.2, "cm")), color = "black") +
+  annotate("text", x = 1+0.04, y = 0.3+0.04,  label = "Saudi Arabia", color = "black", size = 3, hjust = 0, fontface = "bold") +
+  annotate("segment", x = as.numeric(df$scaled.gdpp[df$Country == "Saudi Arabia"]), xend = 1, y = densities[129], yend = 0.3, arrow = arrow(length = unit(0.2, "cm")), color = "black") +
+  annotate("text", x = 3+0.04, y = 0.3+0.04, label = "Ireland", color = "black", size = 3, hjust = 0, fontface = "bold") +
+  annotate("segment", x = as.numeric(df$scaled.gdpp[df$Country == "Ireland"]), xend = 3, y = densities[74], yend = 0.3, arrow = arrow(length = unit(0.2, "cm")), color = "black") 
 ```
 
 The inferences drawn from this plot will be discussed in the [`worldbank_data.md`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/worldbank_data.md) file. However, the main idea is to **observe the presence (or absence) of a shift to the right tail** of the distribution for a certain country, which could indicate its socio-economic development.
