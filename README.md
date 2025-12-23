@@ -1,19 +1,157 @@
 # DPM-Models-for-Clustering
 
-This repository provides detailed materials for implementing the work my friend (and colleague) Tommaso Pozzi and I conducted for our Non-Parametric Statistics exam project.
+# DPM Models for Bayesian Clustering
 
-We studied Dirichlet Process Mixture (DPM) models for clustering, taking our first steps from two key articles:
+This repository contains materials developed for the **Nonparametric Statistics** exam project, focused on **Bayesian clustering via Dirichlet Process Mixture (DPM) models**.  
+The project investigates **decision–theoretic approaches** to summarize posterior distributions over partitions, with particular attention to **loss functions** and **search algorithms**.
 
-[Wade and Ghahramani (2018). Bayesian cluster analysis: Point estimation and credible balls]
-[Dahl, Johnson, and Müller (2022). Search algorithms and loss functions for Bayesian clustering]
-Our exploration focused on two different loss functions: Binder's loss and the Variation of Information loss.
+The work combines **theoretical insights**, **simulation studies**, and **real–data applications**, with fully reproducible **R code**.
 
-After a brief digression into lattice theory, we compared the performance of two algorithms for Bayesian clustering optimization via decision theory:
+---
 
-The greedy search algorithm proposed by Wade and Ghahramani
-SALSO
-To evaluate these algorithms, we conducted a simulation study. Lastly, we applied our findings to a real-world context using the Country-Data dataset (Kaggle, HELP International). This dataset includes socio-economic and health-related features for 167 countries in 2010, with the goal of helping HELP International allocate donations strategically by identifying the nations in greatest need.
+## Background and References
 
-Furthermore, we extended our analysis by comparing these results to more recent data (2022) obtained from the World Bank Group's website.
+Our analysis builds primarily on the following works:
 
-All the analyses are performed with a Dell G5 15 (Windows 10, 64-bit), using a R version 4.3.3.
+- **Wade and Ghahramani (2018)** – *Bayesian cluster analysis: Point estimation and credible balls*  
+- **Dahl, Johnson, and Müller (2022)** – *Search algorithms and loss functions for Bayesian clustering*
+
+The exploration focuses on two loss functions:
+
+- **Binder loss** (and its generalized version)
+- **Variation of Information (VI)** loss
+
+and on two optimization strategies:
+
+- **Greedy Search**
+- **SALSO (Search Algorithm for Loss-based clustering Optimization)**
+
+---
+
+## Repository Structure
+
+The repository is organized as follows:
+
+
+
+### Core scripts
+
+- **`SimulationStudyTRUE.R`**  
+  R code for the simulation study based on synthetic data generated from a multivariate Gaussian mixture.
+
+- **`WorldBankStudy.R`**  
+  Application of DPM models to World Bank socio–economic data (year 2022).
+
+- **`CountryData_Study.R`**  
+  Application of DPM models to the Country-Data dataset (HELP International, year 2010).
+
+### Documentation
+
+- **`simulation.md`**  
+  Detailed description of the simulation design, model specification, convergence diagnostics, loss functions, algorithms, and performance comparison.
+
+- **`worldbank_study.md`**  
+  Explanation of the clustering analysis on World Bank data, including model assumptions, posterior inference, and interpretation of clusters.
+
+- **`countrydata_study.md`**  
+  Description of the analysis on the Country-Data dataset and comparison with more recent data.
+
+Each `.md` file alternates **theoretical explanations**, **methodological choices**, and **selected R code snippets**, following a tutorial-style layout.
+
+---
+
+## Methodological Overview
+
+### Model
+
+All analyses rely on **Dirichlet Process Mixture Models** with Gaussian kernels.  
+Inference on latent partitions is performed via **Marginal Gibbs Sampling** (Neal, 2000), as implemented in the `BNPmix` R package.
+
+### Posterior Summarization
+
+Given the posterior distribution over partitions, we adopt a **decision–theoretic framework**:
+
+where \( L \) is either:
+
+- Binder loss  
+- Variation of Information loss  
+
+### Optimization Algorithms
+
+The expected posterior loss is minimized using:
+
+- **Greedy Search** (Wade & Ghahramani, 2018)
+- **SALSO** (Dahl et al., 2022)
+
+We also study **credible balls** to quantify uncertainty around the estimated optimal partition.
+
+---
+
+## Simulation Study
+
+A simulation study is conducted using trivariate Gaussian mixtures with known cluster structure.  
+The study compares:
+
+- Binder vs VI loss  
+- Greedy vs SALSO algorithms  
+- Performance across increasing sample sizes  
+
+Metrics include:
+
+- Number of recovered clusters
+- Misclassified observations
+- VI and Binder loss w.r.t. the true partition
+- Adjusted Rand Index (ARI)
+- Computational time
+
+Results show that **SALSO combined with VI loss** provides the most stable and scalable performance.
+
+---
+
+## Real Data Applications
+
+### Country-Data (2010)
+
+Clustering of 167 countries based on socio–economic and health indicators, with the goal of identifying groups of nations in greatest need of humanitarian aid.
+
+### World Bank Data (2022)
+
+Extension of the analysis to more recent data, allowing for a qualitative comparison of global development patterns over time.
+
+Both analyses reveal **interpretable and coherent cluster structures**, consistent with economic and geopolitical considerations.
+
+---
+
+## Computational Details
+
+All analyses were performed using:
+
+- **R version 4.3.3**
+- **64-bit Windows environment**
+
+Main R packages used include:
+
+- `BNPmix`
+- `salso`
+- `mcclust.ext`
+- `mclust`
+- `coda`
+- `ggplot2`
+- `rnaturalearth`
+
+---
+
+## Reproducibility
+
+All results presented in the `.md` files can be fully reproduced by running the corresponding `.R` scripts.  
+Random seeds are fixed where appropriate.
+
+---
+
+## Authors
+
+- **Tommaso Menghini**
+- **Tommaso Pozzi**
+
+Project developed for the **Nonparametric Statistics** exam.
+
