@@ -1,5 +1,3 @@
-# DPM-Models-for-Clustering
-
 # DPM Models for Bayesian Clustering
 
 This repository contains materials developed for the **Nonparametric Statistics** exam project, focused on **Bayesian clustering via Dirichlet Process Mixture (DPM) models**.  
@@ -13,8 +11,8 @@ The work combines **theoretical insights**, **simulation studies**, and **realâ€
 
 Our analysis builds primarily on the following works:
 
-- [`Wade and Gharamani `](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/README.md)
-- [`Dahl et al.`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/README.md)
+- [`Wade and Ghahramani`](https://projecteuclid.org/journals/bayesian-analysis/volume-13/issue-2/Bayesian-Cluster-Analysis--Point-Estimation-and-Credible-Balls-with/10.1214/17-BA1073.pdf)
+- [`Dahl et al.`](https://www.tandfonline.com/doi/abs/10.1080/10618600.2022.2069779)
 
 The exploration focuses on two loss functions:
 
@@ -31,8 +29,6 @@ and on two optimization strategies:
 ## Repository Structure
 
 The repository is organized as follows:
-
-
 
 ### Core scripts
 
@@ -65,25 +61,7 @@ Each `.md` file alternates **theoretical explanations**, **methodological choice
 ### Model
 
 All analyses rely on **Dirichlet Process Mixture Models** with Gaussian kernels.  
-Inference on latent partitions is performed via **Marginal Gibbs Sampling** (Neal, 2000), as implemented in the `BNPmix` R package.
-
-### Posterior Summarization
-
-Given the posterior distribution over partitions, we adopt a **decisionâ€“theoretic framework**:
-
-where \( L \) is either:
-
-- Binder loss  
-- Variation of Information loss  
-
-### Optimization Algorithms
-
-The expected posterior loss is minimized using:
-
-- **Greedy Search** (Wade & Ghahramani, 2018)
-- **SALSO** (Dahl et al., 2022)
-
-We also study **credible balls** to quantify uncertainty around the estimated optimal partition.
+Inference on latent partitions is performed via **Marginal Gibbs Sampling** - [`Neal`](https://www.jstor.org/stable/1390653), as implemented in the `BNPmix` `R` package.
 
 ---
 
@@ -92,8 +70,8 @@ We also study **credible balls** to quantify uncertainty around the estimated op
 A simulation study is conducted using trivariate Gaussian mixtures with known cluster structure.  
 The study compares:
 
-- Binder vs VI loss  
-- Greedy vs SALSO algorithms  
+- **Binder** vs **VI** loss  
+- **Greedy** vs **SALSO** algorithms  
 - Performance across increasing sample sizes  
 
 Metrics include:
