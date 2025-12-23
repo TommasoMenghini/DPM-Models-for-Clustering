@@ -94,18 +94,10 @@ As discussed in [`simulation.md`](https://github.com/TommasoMenghini/DPM-Models-
 ``` r
 library(salso)
 
-start_time <- Sys.time()
 salso.VI <- salso(fit$clust, loss=VI())
-end_time <- Sys.time()
-
-time_salso.VI <- difftime(end_time, start_time, units=("secs"))[[1]]
-
 summ.VI <- summary(salso.VI)
 
 labels.salso.VI <- summ.VI$estimate
-
-pairs(x, col = labels.salso.VI, pch = 19)
-
 ```
 
 
