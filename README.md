@@ -32,10 +32,10 @@ The repository is organized as follows:
 
 ### Core scripts
 
-- **`SimulationStudyTRUE.R`**  
+- **`Simulation_Study.R`**  
   R code for the simulation study based on synthetic data generated from a multivariate Gaussian mixture.
 
-- **`WorldBankStudy.R`**  
+- **`WorldBank_Study.R`**  
   Application of DPM models to World Bank socio–economic data (year 2022).
 
 - **`CountryData_Study.R`**  
