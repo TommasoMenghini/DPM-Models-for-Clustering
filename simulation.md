@@ -172,3 +172,17 @@ geweke.diag(entropy)
 
 ```
 
+Implementation of different **algorithms with VI and Binder loss functions*
+================
+
+Once convergence of the MCMC sampler has been assessed, the posterior distribution of partitions is summarized by minimizing different loss functions.
+In this study, we consider two loss functions — **Variation of Information (VI)** and **Binder loss** — combined with two optimization strategies: **Greedy Search** [`Wade and Ghahramani`](https://projecteuclid.org/journals/bayesian-analysis/volume-13/issue-2/Bayesian-Cluster-Analysis--Point-Estimation-and-Credible-Balls-with/10.1214/17-BA1073.pdf) and **SALSO** [`Dahl et al.`](https://www.tandfonline.com/doi/abs/10.1080/10618600.2022.2069779).
+
+All methods are applied starting from the posterior similarity matrix (PSM), computed from the MCMC output.
+
+``` r
+library(mcclust.ext)
+psm <- comp.psm(fit$clust)
+```
+
+## Greedy Search with Variation of Information
