@@ -147,4 +147,28 @@ fit <- PYdensity(y = x, mcmc = mcmc, prior = prior,
 
 ```
 
+bla bla
+
+``` r
+H <- function(partizione){
+  N <- n
+  kn <- max(partizione)
+  nj <- c()
+  for (j in 1:kn){
+    nj[j] <- sum(partizione == j)
+  }
+  somma <- sum(nj*log(nj))
+  log(N, base = 2) - 1/N*somma
+}
+
+entropy <- apply(partizioni, 1, H)
+entropy <- as.mcmc(entropy)
+plot(entropy)
+
+geweke.diag(entropy)
+
+```
+
+
+
 
