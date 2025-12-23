@@ -193,3 +193,38 @@ library(salso)
 salso.VI <- salso(fit$clust, loss = VI())
 labels.salso.VI <- summary(salso.VI)$estimate
 ```
+## SALSO with Binder loss (standard and calibrated)
+
+SALSO is also applied with Binder loss, both in its standard symmetric form and in a calibrated version where the expected number of clusters is controlled. While the symmetric Binder loss leads to an overestimation of the number of clusters, calibrating the parameter `a` allows SALSO to recover a partition consistent with the simulated structure.
+
+``` r
+salso.B  <- salso(fit$clust, loss = binder(a = NULL))
+salso.B2 <- salso(fit$clust, loss = binder(a = list(nClusters = 5)))
+```
+Comparison of Algorithms and Loss Functions
+================
+
+The different combinations of algorithms and loss functions are compared using several performance indicators:
+
+- number of estimated clusters;
+- number of misclassified observations;
+- **VI** loss and **Binder** loss with respect to the true partition;
+- **Adjusted Rand Index (ARI)**;
+- computational time;
+
+The results clearly show that loss choice plays a central role in posterior inference. Across all sample sizes, methods based on **VI** loss consistently recover the correct number of clusters and maintain stable performance. In contrast, **Binder**-based methods — unless explicitly calibrated — tend to generate many small clusters, especially as sample size increases.
+
+From a computational perspective, **SALSO** combined with **VI** loss emerges as the most efficient solution: it provides results comparable to **Greedy–VI** while being orders of magnitude faster for large datasets.
+
+Overall, the simulation study supports the conclusion that **SALSO** + **VI** loss represents the best trade-off between accuracy, robustness, and computational efficiency for posterior clustering inference.
+
+| N = 300 | Algorithm            | k_N | N_i | B(ĉ, c) | VI(ĉ, c) | ARI   | Sys Time |
+|--------|----------------------|-----|-----|---------|----------|-------|----------|
+|        | Greedy VI            | 5   | 13  | 0.0326  | 0.5323   | 0.8985| 25.0549  |
+|        | Greedy Binder        | 24  | 27  | 0.0384  | 0.7658   | 0.8753| 32.1067  |
+|        | Salso VI             | 5   | 13  | 0.0326  | 0.5323   | 0.8985| 4.2243   |
+|        | Salso Binder (a = 1) | 16  | 25  | 0.0377  | 0.7310   | 0.8787| 132.0422 |
+|        | Salso Binder (a = 1.46) | 5 | 14 | 0.0352  | 0.5541   | 0.8909| 20.0045 |
+
+*Performance comparison for N = 300. Lower values of B(ĉ, c) and VI(ĉ, c), and higher ARI indicate better clustering performance.*
+
