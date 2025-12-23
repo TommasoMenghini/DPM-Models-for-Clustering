@@ -36,21 +36,9 @@ set.seed(123)
 n <- 300  
 clusters <- 5 
 
-mu_list <- list(
-  c(-2, -2, -2), 
-  c(2, -2, 2),
-  c(-2, 2, -2),
-  c(2, 2, 2),
-  c(0,0,0)
-)  
+mu_list <- list(c(-2, -2, -2), c(2, -2, 2), c(-2, 2, -2), c(2, 2, 2), c(0,0,0))  
 
-sigma_list <- list(
-  diag(3),  
-  diag(c(1.25, 1.25, 1.25)),
-  diag(3),
-  diag(c(1.25,1.25,1.25)),
-  diag(c(0.5, 0.5, 0.5))
-)
+sigma_list <- list(diag(3), diag(c(1.25, 1.25, 1.25)), diag(3), diag(c(1.25,1.25,1.25)), diag(c(0.5, 0.5, 0.5)))
 
 sim_data <- matrix(0, n, 4)
 
