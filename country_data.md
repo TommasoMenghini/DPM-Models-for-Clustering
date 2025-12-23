@@ -142,8 +142,7 @@ world <- left_join(world, clust, by = c("name" = "country"))
 
 ggplot(data = world) +
   geom_sf(aes(fill = factor(cluster))) +  
-  scale_fill_manual(values = c("1" = 'yellow', "2" = 'red', "3" = 'green', "4" = 'orange', "5" = 'purple', "6" = 'blue', na.value = 'grey'),
-                    name = 'Cluster VI salso', labels = c('1', '2', '3', '4', '5', '6', 'No data available')) + 
+  scale_fill_manual(values = c("1" = 'yellow', "2" = 'red', "3" = 'green', "4" = 'orange', "5" = 'purple', "6" = 'blue', na.value = 'grey'), name = 'Cluster VI salso', labels = c('1', '2', '3', '4', '5', '6', 'No data available')) + 
   theme_minimal() +
   theme(legend.position = "bottom")
 ```
@@ -168,20 +167,9 @@ library(knitr)
 
 table(clust$cluster)[1]
 
-tab <- c(table(clust$cluster)[1], table(clust$cluster)[2],
-         table(clust$cluster)[3], table(clust$cluster)[4],
-         table(clust$cluster)[5], table(clust$cluster)[6])
+tab <- c(table(clust$cluster)[1], table(clust$cluster)[2], table(clust$cluster)[3], table(clust$cluster)[4], table(clust$cluster)[5], table(clust$cluster)[6])
 
-table <- data.frame(
-  Yellow = tab[1],
-  Red = tab[2],
-  Green = tab[3],
-  Orange = tab[4],
-  Purple = tab[5],
-  Blue = tab[6]
-)
-
-kable(table, format = "markdown")
+table <- data.frame(Yellow = tab[1], Red = tab[2], Green = tab[3], Orange = tab[4], Purple = tab[5], Blue = tab[6])
 ```
 
 | Yellow| Red| Green| Orange| Purple| Blue|
@@ -220,8 +208,7 @@ ggplot(df, aes(x = as.numeric(scaled.gdpp))) +
   geom_density() +  
   geom_point(aes(y = densities , color = as.factor(cluster)),  
              position = position_jitter(height = 0.01), size = 2) +
-  scale_color_manual(values = c("1" = 'yellow', "2" = 'red', "3" = 'green', "4" = 'orange', "5" = 'purple', "6" = 'blue', na.value = 'grey'),
-                     name = 'Cluster VI salso', labels = c('1', '2', '3', '4', '5', '6', 'No data available')) +  
+  scale_color_manual(values = c("1" = 'yellow', "2" = 'red', "3" = 'green', "4" = 'orange', "5" = 'purple', "6" = 'blue', na.value = 'grey'), name = 'Cluster VI salso', labels = c('1', '2', '3', '4', '5', '6', 'No data available')) +  
   labs(x = "Scaled GDP per capita", y = "") +
   theme_minimal() +
   theme(legend.position = "none")  +
