@@ -147,7 +147,7 @@ plot(entropy)
 geweke.diag(entropy)
 ```
 
-Implementation of different **algorithms with VI and Binder loss functions*
+Implementation of different Algorithms with Loss Functions
 ================
 
 Once convergence of the MCMC sampler has been assessed, the posterior distribution of partitions is summarized by minimizing different loss functions.
@@ -165,8 +165,8 @@ psm <- comp.psm(fit$clust)
 The Greedy algorithm searches locally on the lattice of partitions to minimize the posterior expected VI loss. The resulting partition identifies five clusters, which matches the true number of components used in the data–generating process, we can see them in the table right below.
 
 ``` r
-library(mcclust.ext)
-psm <- comp.psm(fit$clust)
+wade.VI <- minVI(psm, fit$clust, method = "all", include.greedy = TRUE)
+labels.wade.VI <- wade.VI$cl[5, ]
 ```
 
 |                                | j  =   1 |  j  =  2 | j = 3    | j = 4    | j = 5    |
@@ -174,3 +174,22 @@ psm <- comp.psm(fit$clust)
 | Real Cluster                   |    63    |     65   |   54     |     74   |     44   |
 | VI Greedy Search Cluster       |     56   |     66   |    58    |    72    |     48   |
 
+## Greedy Search with Binder loss
+
+The same Greedy strategy is applied using the Binder loss with equal weights for the two types of misclassification. In this case, the estimated partition contains a substantially larger number of clusters, highlighting the tendency of the Binder loss to over–partition the data when uncertainty is present near cluster boundaries.
+
+``` r
+wade.B <- minbinder.ext(psm, fit$clust, method = "all", include.greedy = TRUE)
+labels.wade.B <- wade.B$cl[5, ]
+```
+## SALSO with Variation of Information
+
+The SALSO algorithm provides a stochastic alternative to Greedy Search and is designed to reduce sensitivity to local minima.
+It directly optimizes the posterior expected loss using multiple randomized runs. Under the VI loss, SALSO again recovers a partition with five clusters, showing strong agreement with the Greedy–VI solution but at a much lower computational cost.
+
+``` r
+library(salso)
+
+salso.VI <- salso(fit$clust, loss = VI())
+labels.salso.VI <- summary(salso.VI)$estimate
+```
