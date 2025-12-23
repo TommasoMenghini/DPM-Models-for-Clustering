@@ -13,8 +13,8 @@ The work combines **theoretical insights**, **simulation studies**, and **real�
 
 Our analysis builds primarily on the following works:
 
-- **Wade and Ghahramani (2018)** – *Bayesian cluster analysis: Point estimation and credible balls*  
-- **Dahl, Johnson, and Müller (2022)** – *Search algorithms and loss functions for Bayesian clustering*
+- [`Wade and Gharamani `](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/README.md)
+- [`Dahl et al.`](https://github.com/TommasoMenghini/DPM-Models-for-Clustering/blob/main/README.md)
 
 The exploration focuses on two loss functions:
 
