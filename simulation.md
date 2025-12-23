@@ -11,7 +11,7 @@ As described in the [`README.md`](https://github.com/TommasoMenghini/DPM-Models-
 Generating the Simulated Dataset
 ================
 
-In the simulation study we decided to generate 300 observation from a **trivariate Gaussian mixture** of **5 components**. In the following table the means and variances of the components are shown:
+In the simulation study we decided to generate 300 observations from a **trivariate Gaussian mixture** of **5 components**. In the following table the means and variances of the components are shown:
 
 <div align="center">
 
@@ -146,8 +146,11 @@ fit <- PYdensity(y = x, mcmc = mcmc, prior = prior,
                  output = output)
 
 ```
+The convergence of the MCMC sampler was assessed by tracking the entropy of the sampled partitions. Entropy provides a compact summary of partition complexity, jointly accounting for both the number of clusters and their relative sizes.
 
-bla bla
+The corresponding traceplot shows stable oscillations after burn-in, with no evident trends, suggesting that the chain has reached a stationary regime.
+
+Convergence was further checked using the Geweke diagnostic applied to the entropy chain. The test did not highlight significant differences between the early and late portions of the chain, supporting satisfactory convergence of the sampler, consistently with what already assessed.
 
 ``` r
 H <- function(partizione){
@@ -168,7 +171,4 @@ plot(entropy)
 geweke.diag(entropy)
 
 ```
-
-
-
 
